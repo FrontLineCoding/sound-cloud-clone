@@ -1,417 +1,1559 @@
 # sound-cloud-clone
-# Kanban Project Board Cards
+# `<name of application here>`
 
-The following cards will guide the implementation of the SoundCloud API. Each
-section should be copied into it's own card on the Kanban project board.
-Each feature's progress should be tracked by checking off requirements as they
-are met and progressing the cards from the `Backlog`, `Next Tasks`,
-`In Progress`, `In Review`, and `Accepted` columns.
+## Database Schema Design
 
+`<insert database schema design here>`
 
-## Kanban Cards
+## API Documentation
 
-Copy each of the following sections into its own card on a Kanban board for the
-project. Github Kanban boards use markdown formatting, allowing these sections
-to be copied directly:
+## All endpoints that require authentication
 
+All endpoints that require a current user to be logged in.
 
-### Authentication Required
+* Request: endpoints that require authentication
+* Error Response: Require authentication
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-All endpoints that require a current user to be logged in receive a standard
-authentication response.
+    ```json
+    {
+      "message": "Authentication required",
+      "statusCode": 401
+    }
+    ```
 
-- [ ] Authentication middleware responds with error status 401 when
-  authentication is not provided
+## All endpoints that require proper authorization
 
+All endpoints that require authentication and the current user does not have the
+correct role(s) or permission(s).
 
-### Authorization Required
+* Request: endpoints that require proper authorization
+* Error Response: Require proper authorization
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-All endpoints that require a current user to have the correct role(s) or
-permission(s) receive a standard authorization response.
+    ```json
+    {
+      "message": "Forbidden",
+      "statusCode": 403
+    }
+    ```
 
-- [ ] Authorization middleware responds with error status 403 when
-  an authenticated user does not have the correct role(s) or permission(s)
+## Get the Current User
 
+Returns the information about the current user that is logged in.
 
-### Sign Up a User
+* Require Authentication: true
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
-Creates a new user, logs them in as the current user, and returns the current
-user's information.
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-- [ ] New user exists in the database after request
-- [ ] Successful response includes newly created `id`, `firstName`, `lastName`,
-  `username`, `email`, and `token`
-- [ ] Error response with status 403 is given when the specified email already
-exists
-- [ ] Error response with status 400 is given when body validations for the
-  `email`, `username`, `firstName`, or `lastName` are violated
+    ```json
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@gmail.com",
+      "username": "JohnSmith"
+    }
+    ```
 
-
-### Log In a User
+## Log In a User
 
 Logs in a current user with valid credentials and returns the current user's
 information.
 
-- [ ] Successful response includes the user's `id`, `firstName`, `lastName`,
-  `username`, `email`, and `token`
-- [ ] Error response with status 401 is given when invalid credentials are given
-- [ ] Error response with status 400 is given when body validations for the
-  `email`, `username`, `firstName`, or `lastName` are violated
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "email": "john.smith@gmail.com",
+      "password": "secret password"
+    }
+    ```
 
-### Get the Current User
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-Returns the information about the current user that is logged in.
+    ```json
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@gmail.com",
+      "username": "JohnSmith",
+      "token": ""
+    }
+    ```
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Successful response includes the user's `id`, `firstName`, `lastName`,
-  `username`, `email`, and `token`
+* Error Response: Invalid credentials
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "message": "Invalid credentials",
+      "statusCode": 401
+    }
+    ```
 
-### Get all Songs
+* Error response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "email": "Email is required",
+        "password": "Password is required"
+      }
+    }
+    ```
+
+## Sign Up a User
+
+Creates a new user, logs them in as the current user, and returns the current
+user's information.
+
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "firstName": "John",
+      "lastName": "Smith",
+      "username": "JohnSmith",
+      "email": "john.smith@gmail.com",
+      "password": "secret password"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Smith",
+      "username": "JohnSmith",
+      "email": "john.smith@gmail.com",
+      "token": ""
+    }
+    ```
+
+* Error response: User already exists with the specified email
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "User already exists",
+      "statusCode": 403,
+      "errors": {
+        "email": "User with that email already exists"
+      }
+    }
+    ```
+
+* Error response: User already exists with the specified username
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "User already exists",
+      "statusCode": 403,
+      "errors": {
+        "username": "User with that username already exists"
+      }
+    }
+    ```
+
+* Error response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "email": "Invalid email",
+        "username": "Username is required",
+        "firstName": "First Name is required",
+        "lastName": "Last Name is required"
+      }
+    }
+    ```
+
+## Get all Songs
 
 Returns all the songs.
 
-- [ ] Seed data exists in the database for songs to be returned.
-- [ ] Successful response includes each song in the database.
-- [ ] Song data returned includes the `id`, `userId`, `albumId`, `title`,
-  `description`, `url`, `createdAt`, `updatedAt`, and `previewImage`
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Get all Songs created by the Current User
+    ```json
+    {
+      "Songs":[
+        {
+          "id": 1,
+          "userId": 1,
+          "albumId": 1,
+          "title": "Yesterday",
+          "description": "A song about the past.",
+          "url": "audio url",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
+
+## Get all Songs created by the Current User
 
 Returns all the songs created by the current user.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Successful response includes only songs created by the current user
-- [ ] Song data returned includes the `id`, `userId`, `albumId`, `title`,
-  `description`, `url`, `createdAt`, `updatedAt`, and `previewImage`
+* Require Authentication: true
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Get details of a Song from an id
+    ```json
+    {
+      "Songs": [
+        {
+          "id": 1,
+          "userId": 1,
+          "albumId": 1,
+          "title": "Yesterday",
+          "description": "A song about the past.",
+          "url": "audio url",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
+
+## Get details of a Song from an id
 
 Returns the details of a song specified by its id.
 
-- [ ] Successful response includes data only for the specified song
-- [ ] Song data returned includes the `id`, `userId`, `albumId`, `title`,
-  `description`, `url`, `createdAt`, `updatedAt`, and `previewImage`
-- [ ] Song data returns associated data for `Artist`, including the `id`,
-  `username`, and `previewImage`
-- [ ] Song data returns associated data for `Album`, including the `id`,
-  `title`, and `previewImage`
-- [ ] Error response with status 404 is given when a song does not exist with
-  the provided `id`
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Create a Song for an Album based on the Album's id
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "albumId": 1,
+      "title": "Yesterday",
+      "description": "A song about the past.",
+      "url": "audio url",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36",
+      "previewImage": "image url",
+      "Artist": {
+        "id": 1,
+        "username": "JohnSmith",
+        "previewImage": "image url"
+      },
+      "Album": {
+        "id": 1,
+        "title": "Time",
+        "previewImage": "image url"
+      }
+    }
+    ```
+
+* Error response: Couldn't find a Song with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Song couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Create a Song for an Album based on the Album's id
 
 Creates and returns a new song.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the album is authorized to add a song
-- [ ] New song exists in the database after request
-- [ ] Song data returned includes the `id`, `userId`, `albumId`, `title`,
-  `description`, `url`, `createdAt`, `updatedAt`, and `previewImage`
-- [ ] Error response with status 400 is given when body validations for the
-  `title` or `url` are violated
-- [ ] Error response with status 404 is given when an album does not exist with
-  the provided `id`
+* Require Authentication: true
+* Require proper authorization: Album must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "title": "Yesterday",
+      "description": "A song about the past.",
+      "url": "audio url",
+      "imageUrl": "image url"
+    }
+    ```
 
-### Edit a Song
+* Successful Response
+  * Status Code: 201
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "albumId": 1,
+      "title": "Yesterday",
+      "description": "A song about the past.",
+      "url": "audio url",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36",
+      "previewImage": "image url"
+    }
+    ```
+
+* Error Response: Body validation error
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "title": "Song title is required",
+        "url": "Audio is required"
+      }
+    }
+    ```
+
+* Error response: Couldn't find an Album with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Album couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Edit a Song
 
 Updates and returns an existing song.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the song is authorized to edit
-- [ ] Song record is updated in the database after request
-- [ ] Song data returned includes the `id`, `userId`, `albumId`, `title`,
-  `description`, `url`, `createdAt`, `updatedAt`, and `previewImage`
-- [ ] Error response with status 400 is given when body validations for the
-  `title` or `url` are violated
-- [ ] Error response with status 404 is given when a song does not exist with
-  the provided `id`
+* Require Authentication: true
+* Require proper authorization: Song must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "title": "Yesterday",
+      "description": "A song about the past.",
+      "url": "audio url",
+      "imageUrl": "image url"
+    }
+    ```
 
-### Delete a Song
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "albumId": 1,
+      "title": "Yesterday",
+      "description": "A song about the past.",
+      "url": "audio url",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-20 20:00:00",
+      "previewImage": "image url"
+    }
+    ```
+
+* Error Response: Body validation error
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "title": "Song title is required",
+        "url": "Audio is required"
+      }
+    }
+    ```
+
+* Error response: Couldn't find a Song with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Song couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Delete a Song
 
 Deletes an existing song.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the song is authorized to delete
-- [ ] Song record is removed from the database after request
-- [ ] Success response includes a `message` indicating a successful deletion
-- [ ] Error response with status 404 is given when a song does not exist with
-  the provided `id`
+* Require Authentication: true
+* Require proper authorization: Song must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Get all Albums
+    ```json
+    {
+      "message": "Successfully deleted",
+      "statusCode": 200
+    }
+    ```
 
-Returns all the albums.
+* Error response: Couldn't find a Song with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-- [ ] Seed data exists in the database for albums to be returned.
-- [ ] Successful response includes each album in the database.
-- [ ] Album data returned includes the `id`, `userId`, `title`, `description`,
-  `createdAt`, `updatedAt`, and `previewImage`
+    ```json
+    {
+      "message": "Song couldn't be found",
+      "statusCode": 404
+    }
+    ```
 
+## Get all Albums
 
-### Get all Albums created by the Current User
+Returns all the Albums.
 
-Returns all the albums created by the current user.
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Successful response includes only albums created by the current user
-- [ ] Album data returned includes the `id`, `userId`, `title`, `description`,
-  `createdAt`, `updatedAt`, and `previewImage`
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "Albums": [
+        {
+          "id": 1,
+          "userId": 1,
+          "title": "Time",
+          "description": "An album about time.",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
 
-### Get details of an Album from an id
+## Get all Albums created by the Current User
+
+Returns all the Albums created by the current user.
+
+* Require Authentication: true
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Albums":[
+        {
+          "id": 1,
+          "userId": 1,
+          "title": "Time",
+          "description": "An album about time.",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
+
+## Get details of an Album from an id
 
 Returns the details of an album specified by its id.
 
-- [ ] Successful response includes data only for the specified album
-- [ ] Album data returned includes the `id`, `userId`, `title`, `description`,
-  `createdAt`, `updatedAt`, and `previewImage`
-- [ ] Album data returns associated data for `Artist`, including the `id`,
-  `username`, and `previewImage`
-- [ ] Album data returns associated data for `Songs`, including the `id`,
-  `userId`, `albumId`, `title`, `description`, `url`, `createdAt`, `updatedAt`,
-  and `previewImage` for each song
-- [ ] Error response with status 404 is given when an album does not exist with
-  the provided `id`
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Create an Album
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "Time",
+      "description": "An album about time.",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36",
+      "previewImage": "image url",
+      "Artist": {
+        "id": 1,
+        "username": "JohnSmith",
+        "previewImage": "image url"
+      },
+      "Songs": [
+        {
+          "id": 1,
+          "userId": 1,
+          "albumId": 1,
+          "title": "Yesterday",
+          "description": "A song about the past.",
+          "url": "audio url",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
+
+* Error response: Couldn't find an Album with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Album couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Create an Album
 
 Creates and returns a new album.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] New album exists in the database after request
-- [ ] Album data returned includes the `id`, `userId`, `title`, `description`,
-  `createdAt`, `updatedAt`, and `previewImage`
-- [ ] Error response with status 400 is given when body validations for the
-  `title` are violated
+* Require Authentication: true
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "title": "Time",
+      "description": "An album about time.",
+      "imageUrl": "image url"
+    }
+    ```
 
-### Edit an Album
+* Successful Response
+  * Status Code: 201
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "Time",
+      "description": "An album about time.",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36",
+      "previewImage": "image url"
+    }
+    ```
+
+* Error Response: Body validation error
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "title": "Album title is required"
+      }
+    }
+    ```
+
+## Edit an Album
 
 Updates and returns an existing album.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the album is authorized to edit
-- [ ] Album record is updated in the database after request
-- [ ] Album data returned includes the `id`, `userId`, `title`, `description`,
-  `createdAt`, `updatedAt`, and `previewImage`
-- [ ] Error response with status 400 is given when body validations for the
-  `title` are violated
-- [ ] Error response with status 404 is given when an album does not exist with
-  the provided `id`
+* Require Authentication: true
+* Require proper authorization: Album must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "title": "Time",
+      "description": "An album about time.",
+      "imageUrl": "image url"
+    }
+    ```
 
-### Delete an Album
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "Time",
+      "description": "An album about time.",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-20 20:00:00",
+      "previewImage": "image url"
+    }
+    ```
+
+* Error Response: Body validation error
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "title": "Album title is required"
+      }
+    }
+    ```
+
+* Error response: Couldn't find an Album with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Album couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Delete an Album
 
 Deletes an existing album.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the album is authorized to delete
-- [ ] Album record is removed from the database after request
-- [ ] Success response includes a `message` indicating a successful deletion
-- [ ] Error response with status 404 is given when an album does not exist with
-  the provided `id`
+* Require Authentication: true
+* Require proper authorization: Album must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Get all Comments by a Song's id
+    ```json
+    {
+      "message": "Successfully deleted",
+      "statusCode": 200
+    }
+    ```
+
+* Error response: Couldn't find an Album with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Album couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Get all Comments by a Song's id
 
 Returns all the comments that belong to a song specified by id.
 
-- [ ] Seed data exists in the database for comments to be returned.
-- [ ] Successful response includes only comments for the specified song
-- [ ] Comment data returned includes the `id`, `userId`, `songId`, `body`,
-  `createdAt`, and `updatedAt`
-- [ ] Comment data returns associated data for `User`, including the `id` and
-  `username`
-- [ ] Error response with status 404 is given when a song does not exist with
-  the provided `id`
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Create a Comment for a Song based on the Song's id
+    ```json
+    {
+      "Comments": [
+        {
+          "id": 1,
+          "userId": 1,
+          "songId": 1,
+          "body": "I love this song!",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36" ,
+          "User": {
+            "id": 1,
+            "username": "JohnSmith"
+          },
+        }
+      ]
+    }
+    ```
+
+* Error response: Couldn't find a Song with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Song couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Create a Comment for a Song based on the Song's id
 
 Create and return a new comment for a song specified by id.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] New comment exists in the database after request
-- [ ] Comment data returned includes the `id`, `userId`, `songId`, `body`,
-  `createdAt`, and `updatedAt`
-- [ ] Error response with status 400 is given when body validations for the
-  `body` are violated
-- [ ] Error response with status 404 is given when a song does not exist with
-  the provided `id`
+* Require Authentication: true
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "body": "I love this song!"
+    }
+    ```
 
-### Edit a Comment
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "songId": 1,
+      "body": "I love this song!",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36" ,
+    }
+    ```
+
+* Error Response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "body": "Comment body text is required"
+      }
+    }
+    ```
+
+* Error response: Couldn't find a Song with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Song couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Edit a Comment
 
 Update and return an existing comment.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the comment is authorized to edit
-- [ ] Comment record is updated in the database after request
-- [ ] Comment data returned includes the `id`, `userId`, `songId`, `body`,
-  `createdAt`, and `updatedAt`
-- [ ] Error response with status 400 is given when body validations for the
-  `body` are violated
-- [ ] Error response with status 404 is given when a comment does not exist with
-  the provided `id`
+* Require Authentication: true
+* Require proper authorization: Comment must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "body": "I love this song!"
+    }
+    ```
 
-### Delete a Comment
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "songId": 1,
+      "body": "I love this song!",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-20 20:00:00"
+    }
+    ```
+
+* Error Response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "body": "Comment body text is required",
+      }
+    }
+    ```
+
+* Error response: Couldn't find a Comment with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Comment couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Delete a Comment
 
 Delete an existing comment.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the comment is authorized to delete
-- [ ] Comment record is removed from the database after request
-- [ ] Success response includes a `message` indicating a successful deletion
-- [ ] Error response with status 404 is given when a comment does not exist with
-  the provided `id`
+* Require Authentication: true
+* Require proper authorization: Comment must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Get details of an Artist from an id
+    ```json
+    {
+      "message": "Successfully deleted",
+      "statusCode": 200
+    }
+    ```
+
+* Error response: Couldn't find a Comment with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Comment couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Get details of an Artist from an id
 
 Returns the details of an artist specified by their id.
 
-- [ ] Successful response includes data only for the specified artist
-- [ ] Artist data returned includes the `id`, `username`, and `previewImage`
-- [ ] Artist data returns aggregate data for `totalSongs` and `totalAlbums`
-  and `previewImage` for each song
-- [ ] Error response with status 404 is given when an artist does not exist with
-  the provided `id`
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Get all Songs of an Artist based on the Artist's id
+    ```json
+    {
+      "id": 1,
+      "username": "JohnSmith",
+      "totalSongs": 10,
+      "totalAlbums": 2,
+      "previewImage": "image url"
+    }
+    ```
 
-Returns all the songs created by the artist specified by id.
+* Error response: Couldn't find an Artists with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-- [ ] Seed data exists in the database for songs to be returned.
-- [ ] Successful response includes only songs for the specified artist
-- [ ] Song data returned includes the `id`, `userId`, `albumId`, `title`,
-  `description`, `url`, `createdAt`, `updatedAt`, and `previewImage` for each
-  song
-- [ ] Error response with status 404 is given when an artist does not exist with
-  the provided `id`
+    ```json
+    {
+      "message": "Artist couldn't be found",
+      "statusCode": 404
+    }
+    ```
 
+## Get all Songs of an Artist from an id
 
-### Get all Albums of an Artist based on the Artist's id
+Returns all the songs created by the specified artist.
 
-Returns all the albums created by the artist specified by id.
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
-- [ ] Seed data exists in the database for albums to be returned.
-- [ ] Successful response includes only albums for the specified artist
-- [ ] Album data returned includes the `id`, `userId`, `title`, `description`,
-  `createdAt`, `updatedAt`, and `previewImage` for each album
-- [ ] Error response with status 404 is given when an artist does not exist with
-  the provided `id`
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "Songs": [
+        {
+          "id": 1,
+          "userId": 1,
+          "albumId": 1,
+          "title": "Yesterday",
+          "description": "A song about the past.",
+          "url": "audio url",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
 
-### Get all Playlists of an Artist based on the Artist's id
+* Error response: Couldn't find an Artist with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-Returns all the playlists created by the artist specified by id.
+    ```json
+    {
+      "message": "Artist couldn't be found",
+      "statusCode": 404
+    }
+    ```
 
-- [ ] Seed data exists in the database for playlists to be returned.
-- [ ] Successful response includes only playlists for the specified artist
-- [ ] Playlist data returned includes the `id`, `userId`, `name`, `createdAt`,
-  `updatedAt`, and `previewImage` for each playlist
-- [ ] Error response with status 404 is given when an artist does not exist with
-  the provided `id`
+## Get all Albums of an Artist from an id
 
+Returns all the albums created by the specified artist.
 
-### Create a Playlist
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Albums": [
+        {
+          "id": 1,
+          "userId": 1,
+          "title": "Time",
+          "description": "An album about time.",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
+
+* Error response: Couldn't find an Artist with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Artist couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Get all Playlists of an Artist from an id
+
+Returns all the playlists created by the specified artist.
+
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Playlists": [
+        {
+          "id": 1,
+          "userId": 1,
+          "name": "Current Favorites",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
+
+* Error response: Couldn't find an Artist with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Artist couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Create a Playlist
 
 Creates and returns a new playlist.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] New playlist exists in the database after request
-- [ ] Playlist data returned includes the `id`, `userId`, `name`, `createdAt`,
-  `updatedAt`, and `previewImage`
-- [ ] Error response with status 400 is given when body validations for the
-  `name` are violated
+* Require Authentication: true
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "name": "Current Favorites",
+      "imageUrl": "image url"
+    }
+    ```
 
-## Add a Song to a Playlist based on the Playlist's id
+* Successful Response
+  * Status Code: 201
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Current Favorites",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36",
+      "previewImage": "image url"
+    }
+    ```
+
+* Error Response: Body validation error
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "name": "Playlist name is required"
+      }
+    }
+    ```
+
+## Add a Song to a Playlist based on the Playlists's id
 
 Add a song to a playlist specified by the playlist's id.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the playlist is authorized to add a song
-- [ ] New `PlaylistSong` exists in the database after request
-- [ ] PlaylistSong data returned includes the `id`, `playlistId`, and `songId`
-- [ ] Error response with status 404 is given when a playlist does not exist
-  with the provided `id`
-- [ ] Error response with status 404 is given when a song does not exist with
-  the provided `id`
+* Require Authentication: true
+* Require proper authorization: Playlist must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
+    ```json
+    {
+      "songId": 1
+    }
+    ```
 
-### Get details of a Playlist from an id
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "playlistId": 1,
+      "songId": 1
+    }
+    ```
+
+* Error response: Couldn't find a Playlist with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Playlist couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+* Error response: Couldn't find a Song with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Song couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Get details of a Playlist from an id
 
 Returns the details of a playlist specified by its id.
 
-- [ ] Successful response includes data only for the specified playlist
-- [ ] Playlist data returned includes the `id`, `userId`, `name`, `createdAt`,
-  `updatedAt`, and `previewImage`
-- [ ] Playlist data returns associated data for `Songs`, includes the `id`,
-  `userId`, `albumId`, `title`, `description`, `url`, `createdAt`, `updatedAt`,
-  and `previewImage` for each song
-- [ ] Error response with status 404 is given when a playlist does not exist
-  with the provided `id`
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Edit a Playlist
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Current Favorites",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36",
+      "previewImage": "image url",
+      "Songs": [
+        {
+          "id": 1,
+          "userId": 1,
+          "albumId": 1,
+          "title": "Yesterday",
+          "description": "A song about the past.",
+          "url": "audio url",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
 
-Update and return an existing playlist.
+* Error response: Couldn't find a Playlist with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the playlist is authorized to edit
-- [ ] Playlist record is updated in the database after request
-- [ ] Playlist data returned includes the `id`, `userId`, `name`, `createdAt`,
-  `updatedAt`, and `previewImage`
-- [ ] Error response with status 400 is given when body validations for the
-  `name` are violated
-- [ ] Error response with status 404 is given when a playlist does not exist
-  with the provided `id`
+    ```json
+    {
+      "message": "Playlist couldn't be found",
+      "statusCode": 404
+    }
+    ```
 
+## Edit a Playlist
 
-### Delete a Playlist
+Updates and returns an existing playlist.
 
-Delete an existing playlist.
+* Require Authentication: true
+* Require proper authorization: Playlist must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Only the owner of the playlist is authorized to delete
-- [ ] Playlist record is removed from the database after request
-- [ ] Success response includes a `message` indicating a successful deletion
-- [ ] Error response with status 404 is given when a playlist does not exist
-  with the provided `id`
+    ```json
+    {
+      "name": "Current Favorites",
+      "imageUrl": "image url"
+    }
+    ```
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Get all Playlists created by the Current User
+    ```json
+    {
+      "id": 1,
+      "userId": 1,
+      "name": "Current Favorites",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-20 20:00:00",
+      "previewImage": "image url"
+    }
+    ```
+
+* Error Response: Body validation error
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "name": "Playlist name is required"
+      }
+    }
+    ```
+
+* Error response: Couldn't find a Playlist with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Playlist couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Delete a Playlist
+
+Deletes an existing playlist.
+
+* Require Authentication: true
+* Require proper authorization: Playlist must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Successfully deleted",
+      "statusCode": 200
+    }
+    ```
+
+* Error response: Couldn't find a Playlist with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Playlist couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+## Get all Playlists created by the Current User
 
 Returns all the playlists created by the current user.
 
-- [ ] An authenticated user is required for a successful response
-- [ ] Successful response includes only playlists created by the current user
-- [ ] Playlist data returned includes the `id`, `userId`, `name`, `createdAt`,
-  `updatedAt`, and `previewImage` for each playlist
+* Require Authentication: true
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
 
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
 
-### Add Query Filters to Get All Songs
+    ```json
+    {
+      "Playlists":[
+        {
+          "id": 1,
+          "userId": 1,
+          "name": "Current Favorites",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ]
+    }
+    ```
+
+## Add Query Filters to Get All Songs
 
 Return songs filtered by query parameters.
 
-- [ ] Query parameters are accepted for `page`, `size`, `title`, and `createdAt`
-- [ ] Default values are provided for the `page` and `size` parameters
-- [ ] Successful response includes only songs in the database that meet the
-  specified query parameters criteria
-- [ ] Song data returned includes the `id`, `userId`, `albumId`, `title`,
-  `description`, `url`, `createdAt`, `updatedAt`, and `previewImage` for each
-  song
-- [ ] Successful response includes the `page` and `size` of the returned payload
-- [ ] Error response with status 400 is given when query parameter validations
-  for the `page`, `size`, `title`, or `createdAt` are violated
+* Require Authentication: false
+* Request
+  * Method: ?
+  * URL: ?
+  * Query Parameters
+    * page: integer, minimum: 0, maximum: 10, default: 0
+    * size: integer, minimum: 0, maximum: 20, default: 20
+    * title: string, optional
+    * createdAt: string, optional
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Songs":[
+        {
+          "id": 1,
+          "userId": 1,
+          "albumId": 1,
+          "title": "Yesterday",
+          "description": "A song about the past.",
+          "url": "audio url",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "previewImage": "image url"
+        }
+      ],
+      "page": 2,
+      "size": 25
+    }
+    ```
+
+* Error Response: Query parameter validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "page": "Page must be greater than or equal to 0",
+        "size": "Size must be greater than or equal to 0",
+        "createdAt": "CreatedAt is invalid"
+      }
+    }
+    ```
