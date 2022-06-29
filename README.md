@@ -1,5 +1,5 @@
 # sound-cloud-clone
-# `<name of application here>`
+# `sound-cloud-clone`
 
 ## Database Schema Design
 
