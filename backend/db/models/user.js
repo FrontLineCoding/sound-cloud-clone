@@ -37,7 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       return await User.scope('currentUser').findByPk(user.id);
     }
     static associate(models) {
-      // define association here
+      User.hasMany(models.Playlist);
+      User.hasMany(models.Comment);
+      User.hasOne(models.Artist);
     }
      validatePassword (password){
       return bcrypt.compareSync(password, this.hashedPassword.toString());
@@ -46,6 +48,19 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init(
     {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull:false
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull:false
+
+      },
+      artistId: {
+        allowNull: true,
+        type: DataTypes.INTEGER
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
