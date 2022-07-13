@@ -1,79 +1,80 @@
 'use strict';
+const bcrypt = require('bcryptjs');
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+    up: async  (queryInterface, Sequelize) => {
 
-      await queryInterface.bulkInsert('Users', [
+      return queryInterface.bulkInsert('Users', [
         {
-          firstName: 'Doe',
+          firstName: 'userone',
           lastName: 'peublo',
-          email:'abc@email.com',
-          username:'user1',
-          password: 'password',
-          artistId
+          email:'useremailone@email.com',
+          username:'user1workbaby',
+          hashedPassword: bcrypt.hashSync('password1'),
         },
         {
           firstName: 'usertwo',
-          lastName: 'userthree',
-          email:'abcd@email.com',
+          lastName: 'whocares',
+          email:'usertwoemail@email.com',
           username:'user2',
-          password: 'password',
+          hashedPassword: bcrypt.hashSync('password2'),
           artistId: 1
         },
         {
           firstName: 'userthree',
-          lastName: 'peublo',
-          email:'abasdfac@email.com',
+          lastName: 'nomadslan',
+          email:'userthreeemail@email.com',
           username:'user3',
-          password: 'password',
+          hashedPassword: bcrypt.hashSync('password3'),
           artistId: 2
         },
         {
           firstName: 'userfour',
-          lastName: 'peublo',
-          email:'absdf@email.com',
+          lastName: 'jubilee',
+          email:'userfouremail@email.com',
           username:'user1',
-          password: 'password',
+          hashedPassword: bcrypt.hashSync('password4'),
           artistId: 3
         },
         {
           firstName: 'userfive',
-          lastName: 'peublo',
-          email:'hgabc@email.com',
+          lastName: 'sweetTaters',
+          email:'userfiveemail@email.com',
           username:'user5',
-          password: 'password',
+          hashedPassword: bcrypt.hashSync('password5'),
         },
         {
           firstName: 'usersix',
-          lastName: 'ohon',
-          email:'argrbc@email.com',
+          lastName: 'ohonss',
+          email:'usersixemail@email.com',
           username:'user6',
-          password: 'password',
+          hashedPassword: bcrypt.hashSync('password6'),
         },
         {
           firstName: 'userseven',
-          lastName: 'tehee',
-          email:'ayjedbc@email.com',
+          lastName: 'tehesse',
+          email:'usersevenemail@email.com',
           username:'user7',
-          password: 'password',
+          hashedPassword: bcrypt.hashSync('password7'),
         },
         {
           firstName: 'usereight',
           lastName: 'whoops',
-          email:'absdgc@email.com',
+          email:'usereightemail@email.com',
           username:'user8',
-          password: 'password',
+          hashedPassword: bcrypt.hashSync('password8'),
         },
 
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
+   down : async (queryInterface, Sequelize) => {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    return;
   }
 };

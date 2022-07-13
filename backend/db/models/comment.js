@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Comment.belongsTo(models.Song);
       Comment.belongsTo(models.User);
-
     }
   }
   Comment.init({

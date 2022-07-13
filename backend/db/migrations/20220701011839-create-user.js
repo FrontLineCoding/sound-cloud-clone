@@ -27,7 +27,7 @@ module.exports = {
         unique: true
       },
       hashedPassword: {
-        type: Sequelize.STRING.BINARY,
+        type: Sequelize.STRING(256),//Sequelize.STRING.BINARY,
         allowNull: false
       },
       artistId: {

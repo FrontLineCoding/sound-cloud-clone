@@ -1,37 +1,33 @@
 'use strict';
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-     await queryInterface.bulkInsert('People', [
+   up : async (queryInterface, Sequelize) => {
+     return  queryInterface.bulkInsert('Playlists', [
       {
        userId: 1,
-       name: "PlaylistOne",
-       previewImg: "image"
+       name: "PlaylistOne"
       },
       {
         userId: 5,
-        name: "PlaylistTwo",
-        previewImg: "image"
+        name: "PlaylistTwo"
        },
        {
         userId: 3,
-        name: "PlaylistThree",
-        previewImg: "image"
+        name: "PlaylistThree"
        },
        {
         userId: 1,
-        name: "PlaylistFour",
-        previewImg: "image"
+        name: "PlaylistFour"
        }
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
+   down : async (queryInterface, Sequelize) => {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
-     */
+     */return;
   }
 };

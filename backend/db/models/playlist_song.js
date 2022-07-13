@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   playlist_song.init({
-    artistId: {
+    playlistId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
