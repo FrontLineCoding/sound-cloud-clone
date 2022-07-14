@@ -7,17 +7,20 @@ module.exports = {
         {
           username: 'JohnDoe',
           totalSongs: 2,
-          totalAlbums: 1
+          totalAlbums: 1,
+          userId: 1
         },
         {
-          username: 'LilJ',
+          username: 'Lil J',
           totalSongs: 2,
-          totalAlbums: 1
+          totalAlbums: 1,
+          userId: 2
         },
         {
           username: 'HillTop',
           totalSongs: 2,
-          totalAlbums: 1
+          totalAlbums: 1,
+          userId: 3
         },
     ], {});
   },

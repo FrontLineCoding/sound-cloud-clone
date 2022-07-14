@@ -30,10 +30,6 @@ module.exports = {
         type: Sequelize.STRING(256),//Sequelize.STRING.BINARY,
         allowNull: false
       },
-      artistId: {
-        type: Sequelize.INTEGER,
-        allowNull:true
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

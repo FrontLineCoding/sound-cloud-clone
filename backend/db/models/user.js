@@ -57,10 +57,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull:false
 
       },
-      artistId: {
-        allowNull: true,
-        type: DataTypes.INTEGER
-      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -1,7 +1,9 @@
-const express = require('express')
+const express = require('express');
+const app = require('../../app');
 const { Song } = require('../../db/models');
 
 const router = express.Router();
+
 
 
 router.get('/', async (req, res) => {
@@ -21,7 +23,7 @@ router.get('/', async (req, res) => {
 
     if(size > await Song.count()){
         res.status(400);
-        const error = Error(`Reduce the size to song count: ${await Song.count()}`);
+        const error = Error(`Largest size can be is: ${await Song.count()}`);
         return res.json({
             statusCode: res.statusCode,
             message: error.message
@@ -80,5 +82,6 @@ router.get('/', async (req, res) => {
     }
     res.json(payload);
 });
+
 
 module.exports = router;
