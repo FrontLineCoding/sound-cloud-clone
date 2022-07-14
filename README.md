@@ -3,7 +3,7 @@
 
 ## Database Schema Design
 
-![DB SCHEMA](/second-attempt.PNG?raw=true "AirBnB Database Schema")
+![DB SCHEMA](/finalDBSchema.PNG?raw=true "AirBnB Database Schema")
 
 
 ## API Documentation
