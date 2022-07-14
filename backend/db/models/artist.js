@@ -16,10 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Artist.init({
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     userId: {
       type: DataTypes.INTEGER,
     },

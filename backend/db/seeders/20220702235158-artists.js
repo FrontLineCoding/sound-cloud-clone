@@ -5,22 +5,19 @@ module.exports = {
 
       return queryInterface.bulkInsert('Artists', [
         {
-          username: 'JohnDoe',
+          userId: 1,
           totalSongs: 2,
-          totalAlbums: 1,
-          userId: 1
+          totalAlbums: 1
         },
         {
-          username: 'Lil J',
+          userId: 2,
           totalSongs: 2,
-          totalAlbums: 1,
-          userId: 2
+          totalAlbums: 1
         },
         {
-          username: 'HillTop',
+          userId: 3,
           totalSongs: 2,
-          totalAlbums: 1,
-          userId: 3
+          totalAlbums: 1
         },
     ], {});
   },
