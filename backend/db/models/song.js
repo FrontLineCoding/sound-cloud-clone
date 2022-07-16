@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Song.belongsToMany(models.Playlist, {through: models.playlist_song});
-      Song.belongsTo(models.Artist);
+      Song.belongsTo(models.Artist, {foreignKey: 'userId'});
       Song.belongsTo(models.Album);
     }
   }
   Song.init({
-    artistId: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    previewImg: {
+    previewImage: {
       type: DataTypes.STRING
     }
   }, {

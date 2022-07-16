@@ -270,7 +270,7 @@ Returns all the songs created by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/songs/:sessionUserId'
+  * URL: '/songs/session/:sessionUserId'
   * Body: none
 
 * Successful Response
@@ -570,7 +570,7 @@ Returns all the Albums created by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/albums/:sessionUserId'
+  * URL: '/albums/session/:sessionUserId'
   * Body: none
 
 * Successful Response
@@ -820,7 +820,7 @@ Returns all the comments that belong to a song specified by id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/comments/:songId'
+  * URL: '/comments/songs/:songId'
   * Body: none
 
 * Successful Response
@@ -868,7 +868,7 @@ Create and return a new comment for a song specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: '/comments/:songId'
+  * URL: '/comments/songs/:songId'
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1073,7 +1073,7 @@ Returns all the songs created by the specified artist.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/songs/:artistId'
+  * URL: '/songs/artists/:artistId'
   * Body: none
 
 * Successful Response
@@ -1120,7 +1120,7 @@ Returns all the albums created by the specified artist.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/albums/:artistId'
+  * URL: '/albums/artists/:artistId'
   * Body: none
 
 * Successful Response
@@ -1165,7 +1165,7 @@ Returns all the playlists created by the specified artist.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/playlists/:artistId'
+  * URL: '/playlists/artists/:artistId'
   * Body: none
 
 * Successful Response
@@ -1262,7 +1262,7 @@ Add a song to a playlist specified by the playlist's id.
 * Require proper authorization: Playlist must belong to the current user
 * Request
   * Method: PUT/PATCH
-  * URL: '/playlists/:playlistId/:songId'
+  * URL: '/playlists/:playlistId/songs/:songId'
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1476,7 +1476,7 @@ Returns all the playlists created by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/playlists/:sessionUserId'
+  * URL: '/playlists/seession/:sessionUserId'
   * Body: none
 
 * Successful Response

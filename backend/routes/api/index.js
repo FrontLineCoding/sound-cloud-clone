@@ -6,6 +6,9 @@ const { requireAuth } = require('../../utils/auth.js');
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const songsRouter = require('./songs.js');
+const albumsRouter = require('./albums.js');
+const commentsRouter = require('./comments.js');
+const artistsRouter = require('./artists.js');
 
 
 
@@ -14,6 +17,10 @@ router.use(restoreUser); //<---- ME FIRST
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/songs', songsRouter);
+router.use('/albums', albumsRouter);
+router.use('/comments', commentsRouter);
+router.use('/artists', artistsRouter);
+
 
 
 

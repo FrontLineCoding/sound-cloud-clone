@@ -7,25 +7,25 @@ module.exports = {
         artistId: 1,
         title: "Playlist One",
         description:"this is a playlist from a user",
-        previewImg: "image"
+        previewImage: "image"
       },
       {
         artistId: 2,
         title: "Playlist Two",
         description:"this is a playlist from a user",
-        previewImg: "image"
+        previewImage: "image"
       },
       {
         artistId: 3,
         title: "Playlist Three",
         description:"this is a playlist from a user",
-        previewImg: "image"
+        previewImage: "image"
       },
       {
         artistId: 1,
         title: "Playlist Four",
         description:"this is a playlist from a user",
-        previewImg: "image"
+        previewImage: "image"
       },
     ], {});
   },

@@ -1,9 +1,51 @@
 const express = require('express');
 const app = require('../../app');
-const { Song } = require('../../db/models');
+const { Song, User, Artist, Album} = require('../../db/models');
 
 const router = express.Router();
 
+//TODO: MAKE END POINTS RESTful
+
+
+router.get('/:songId', async (req, res) => {
+    const { songId } = req.params;
+
+    const song = await Song.findAll({
+        where: {id: songId},
+        include: [{model:Artist, include: [User]}, Album]
+    });
+    if(song.length === 0){
+        res.status(404);
+        const error = new Error('Song could not be found');
+        return res.json({
+            message: error.message,
+            statusCode: res.statusCode
+        })
+    }
+    let payload = {
+        id: song[0].id,
+        userId: song[0].userId,
+        albumId: song[0].albumId,
+        title: song[0].title,
+        description: song[0].description,
+        url: song[0].url,
+        createdAt: song[0].createdAt,
+        updatedAt: song[0].updatedAt,
+        previewImage: song[0].previewImage,
+        Artist: {
+            id: song[0].Artist.id,
+            username: song[0].Artist.User.username,
+            previewImage: song[0].Artist.previewImage,
+        },
+        Album: {
+            id: song[0].Album.id,
+            title: song[0].Album.title,
+            previewImage: song[0].Album.previewImage
+        }
+    };
+    res.status(200);
+    res.json(payload);
+ });
 
 
 router.get('/', async (req, res) => {
@@ -12,8 +54,7 @@ router.get('/', async (req, res) => {
     let createdAt = req.query.createdAt;
     // Establish base query object to be built up
     let query = {
-        where: {},
-        include: []
+        where: {}
     };
 
     // Pagination Options
@@ -80,6 +121,7 @@ router.get('/', async (req, res) => {
         size ,
         songs
     }
+    res.status(200);
     res.json(payload);
 });
 

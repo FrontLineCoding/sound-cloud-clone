@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.TEXT
     },
-    previewImg: {
+    previewImage: {
       type: DataTypes.STRING
     }
   }, {

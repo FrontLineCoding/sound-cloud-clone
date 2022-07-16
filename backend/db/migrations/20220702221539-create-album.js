@@ -19,9 +19,6 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      previewImg: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -31,6 +28,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      previewImage: {
+        type: Sequelize.STRING
       }
     });
   },

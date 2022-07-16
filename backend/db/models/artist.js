@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Artist.belongsTo(models.User, {onDelete: 'CASCADE'});
-      Artist.hasMany(models.Song, {foreignKey: 'artistId'});
+      Artist.hasMany(models.Song, {foreignKey: 'userId'});
       Artist.hasMany(models.Album, {foreignKey: 'artistId'});
     }
   }
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    previewImg: {
+    previewImage: {
       type: DataTypes.STRING,
       allowNull: true
     }
