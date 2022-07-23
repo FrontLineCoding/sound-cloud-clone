@@ -3,7 +3,7 @@
 
 ## Database Schema Design
 
-![DB SCHEMA](/finalDBSchema1.PNG?raw=true "AirBnB Database Schema")
+![DB SCHEMA](/finalDBSchema2.PNG?raw=true "AirBnB Database Schema")
 
 
 ## API Documentation
@@ -52,7 +52,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/session'
+  * URL: '/session/user'
   * Body: none
 
 * Successful Response
@@ -270,7 +270,7 @@ Returns all the songs created by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/songs/session/:sessionUserId'
+  * URL: '/songs/session/user'
   * Body: none
 
 * Successful Response
@@ -570,7 +570,7 @@ Returns all the Albums created by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/albums/session/:sessionUserId'
+  * URL: '/albums/session/user'
   * Body: none
 
 * Successful Response
@@ -820,7 +820,7 @@ Returns all the comments that belong to a song specified by id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/comments/songs/:songId'
+  * URL: '/songs/:songId/comments'
   * Body: none
 
 * Successful Response
@@ -1073,7 +1073,7 @@ Returns all the songs created by the specified artist.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/songs/artists/:artistId'
+  * URL: '/artists/:artistId/songs'
   * Body: none
 
 * Successful Response
@@ -1120,7 +1120,7 @@ Returns all the albums created by the specified artist.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/albums/artists/:artistId'
+  * URL: '/artists/:artistId/albums'
   * Body: none
 
 * Successful Response
@@ -1165,7 +1165,7 @@ Returns all the playlists created by the specified artist.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: '/playlists/artists/:artistId'
+  * URL: '/artists/:artistId/playlists'
   * Body: none
 
 * Successful Response
@@ -1262,7 +1262,7 @@ Add a song to a playlist specified by the playlist's id.
 * Require proper authorization: Playlist must belong to the current user
 * Request
   * Method: PUT/PATCH
-  * URL: '/playlists/:playlistId/songs/:songId'
+  * URL: '/playlists/:playlistId/songs'
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1476,7 +1476,7 @@ Returns all the playlists created by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: '/playlists/seession/:sessionUserId'
+  * URL: '/playlists/seession/user'
   * Body: none
 
 * Successful Response
