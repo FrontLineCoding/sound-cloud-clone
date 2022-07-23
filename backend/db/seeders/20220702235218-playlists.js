@@ -5,19 +5,23 @@ module.exports = {
      return  queryInterface.bulkInsert('Playlists', [
       {
        userId: 1,
-       name: "PlaylistOne"
+       name: "PlaylistOne",
+       previewImage: 'image url'
       },
       {
         userId: 5,
-        name: "PlaylistTwo"
+        name: "PlaylistTwo",
+        previewImage: 'image url'
        },
        {
         userId: 3,
-        name: "PlaylistThree"
+        name: "PlaylistThree",
+        previewImage: 'image url'
        },
        {
         userId: 1,
-        name: "PlaylistFour"
+        name: "PlaylistFour",
+        previewImage: 'image url'
        }
     ], {});
   },

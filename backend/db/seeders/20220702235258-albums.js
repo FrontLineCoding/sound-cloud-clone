@@ -4,27 +4,27 @@ module.exports = {
    up : async (queryInterface, Sequelize) => {
      return queryInterface.bulkInsert('Albums', [
       {
-        artistId: 1,
-        title: "Playlist One",
-        description:"this is a playlist from a user",
+        userId: 1,
+        title: "album One",
+        description:"this is an album from a user",
         previewImage: "image"
       },
       {
-        artistId: 2,
-        title: "Playlist Two",
-        description:"this is a playlist from a user",
+        userId: 2,
+        title: "album Two",
+        description:"this is an album from a user",
         previewImage: "image"
       },
       {
-        artistId: 3,
-        title: "Playlist Three",
-        description:"this is a playlist from a user",
+        userId: 3,
+        title: "album Three",
+        description:"this is an album from a user",
         previewImage: "image"
       },
       {
-        artistId: 1,
-        title: "Playlist Four",
-        description:"this is a playlist from a user",
+        userId: 1,
+        title: "album Four",
+        description:"this is an album from a user",
         previewImage: "image"
       },
     ], {});

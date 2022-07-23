@@ -36,10 +36,6 @@ module.exports = {
         songId: 2
       },
       {
-        playlistId: 2,
-        songId: 1
-      },
-      {
         playlistId: 3,
         songId: 5
       },

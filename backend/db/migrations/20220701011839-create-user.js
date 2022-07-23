@@ -30,6 +30,13 @@ module.exports = {
         type: Sequelize.STRING(256),//Sequelize.STRING.BINARY,
         allowNull: false
       },
+      isArtist: {
+        type: Sequelize.BOOLEAN(),
+        defaultValue: false
+      },
+      previewImage: {
+        type: Sequelize.STRING(256)
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

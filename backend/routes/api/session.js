@@ -1,5 +1,5 @@
 const express = require('express')
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 const validateLogin = [
-  check('credential')
+  check('email')
     .exists({ checkFalsy: true })
     .notEmpty()
     .withMessage('Please provide a valid email or username.'),
@@ -18,28 +18,47 @@ const validateLogin = [
   handleValidationErrors
 ];
 
+//Gets session (currently logged in) user
+router.get('/user', requireAuth, async (req, res) => {
+  const { user } = req;
+  const token = await setTokenCookie(res, user);
+  const payload = {
+    id : user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    // username: user.username,
+    token
+  }
+  return res.json(payload);
+});
+
 //Login
 router.post(
     '/',
     validateLogin,
     async (req, res, next) => {
-      const { credential, password } = req.body;
-
-      const user = await User.login({ credential, password });
+      const { email, password } = req.body;
+      const user = await User.login({ email, password });
+      const token = await setTokenCookie(res, user)
 
       if (!user) {
-        const err = new Error('Login failed');
+        const err = new Error('Invalid Credentials');
         err.status = 401;
         err.title = 'Login failed';
-        err.errors = ['The provided credentials were invalid.'];
         return next(err);
       }
 
-      await setTokenCookie(res, user);
-
-      return res.json({
-        user
-      });
+      const payload = {
+        id : user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        // username: user.username,
+        token
+      }
+      res.status(200);
+      return res.json(payload);
     }
   );
 
@@ -54,10 +73,7 @@ router.delete(
   );
 
   // Restore session user
-router.get(
-    '/',
-    restoreUser,
-    (req, res) => {
+router.get('/',restoreUser, (req, res) => {
       const { user } = req;
       if (user) {
         return res.json({

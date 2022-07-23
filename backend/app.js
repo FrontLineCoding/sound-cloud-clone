@@ -57,11 +57,17 @@ if (!isProduction) {
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
   // check if error is a Sequelize error:
+  let errObj = {};
   if (err instanceof ValidationError) {
-    err.errors = err.errors.map((e) => e.message);
-    err.title = 'Validation error';
+    errObj = {};
+    err.errors.forEach((e) => {
+      errObj[e.path] = e.message;
+    });
+    err.errors = errObj;
+    err.title = "Validation error";
   }
   next(err);
+
 });
 
 // backend/app.js
@@ -69,11 +75,11 @@ app.use((err, _req, _res, next) => {
 // Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
-  console.error(err);
+  // console.error(err);
   res.json({
-    title: err.title || 'Server Error',
     message: err.message,
-    errors: err.errors,
+    statusCode: err.status,
+    errors: {...err.errors},
     stack: isProduction ? null : err.stack
   });
 });

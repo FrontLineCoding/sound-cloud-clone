@@ -7,6 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+//Look at the crential vs email key
 
 const validateSignup = [
   check('email')
@@ -34,14 +35,21 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-      const { email, password, username } = req.body;
-      const user = await User.signup({ email, username, password });
+      const { firstName, lastName, email, password, username } = req.body;
+      const user = await User.signup({ firstName, lastName, email, password, username });
 
-      await setTokenCookie(res, user);
+      const token = await setTokenCookie(res, user);
 
-      return res.json({
-        user
-      });
+      const payload = {
+        id : user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        // username: user.username,
+        token
+      }
+
+      return res.json(payload);
     }
   );
 

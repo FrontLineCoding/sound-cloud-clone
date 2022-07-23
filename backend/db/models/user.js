@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     static getCurrentUserById(id) {
       return User.scope("currentUser").findByPk(id);
     }
-    static async login({ credential, password }) {
+    static async login({ email, password }) {
       const { Op } = require('sequelize');
       const user = await User.scope('loginUser').findOne({
         where: {
           [Op.or]: {
-            username: credential,
-            email: credential
+            username: email,
+            email: email
           }
         }
       });
@@ -27,9 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         return await User.scope('currentUser').findByPk(user.id);
       }
     }
-    static async signup({ username, email, password }) {
+    static async signup({ firstName, lastName, username, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
+        firstName,
+        lastName,
         username,
         email,
         hashedPassword
@@ -39,7 +41,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasMany(models.Playlist);
       User.hasMany(models.Comment);
-      User.hasOne(models.Artist);
+      User.hasMany(models.Song, {foreignKey: 'userId'});
+      User.hasMany(models.Album, {foreignKey: 'userId'});
+
     }
      validatePassword (password){
       return bcrypt.compareSync(password, this.hashedPassword.toString());
@@ -69,6 +73,9 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
+      previewImage: {
+        type: DataTypes.STRING
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -81,8 +88,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
         validate: {
-          // len: [60, 60]
+          len: [60, 60]
         }
+      },
+      isArtist : {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       }
     },
     {
