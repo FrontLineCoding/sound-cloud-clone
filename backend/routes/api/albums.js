@@ -23,10 +23,6 @@ const validateBodyAddSong = [
       .exists({ checkFalsy: true })
       .notEmpty()
       .withMessage('Album title is required'),
-    check('url')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('Audio is required'),
 
      handleAddSongToAlbum
   ];
