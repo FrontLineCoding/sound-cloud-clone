@@ -6,8 +6,9 @@
 }
 
 label{
-    width: 350px;
     display: flex;
+    width: 350px;
+    margin: 3px;
     justify-content: space-between;
 }
 

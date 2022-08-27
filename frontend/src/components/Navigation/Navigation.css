@@ -1,0 +1,38 @@
+html{
+    background-color: gray;
+}
+
+ul{
+    list-style: none;
+}
+
+li{
+    display: flex;
+    align-items: center;
+    border: 3px solid cyan;
+    background-color: black;
+    border-radius: 50px;
+    height: 40px;
+    color: white;
+    padding: 3px
+}
+
+a{
+    width: 10%;
+    margin: 5px;
+    text-decoration: none;
+    color: white;
+}
+
+.active{
+    color: cyan;
+    text-decoration: none;
+}
+
+.profile-dropdown{
+    display: flex;
+    flex-direction: column;
+    justify-content:baseline;
+    color: white;
+    offset: 10px, 0, 0, 0;
+}
