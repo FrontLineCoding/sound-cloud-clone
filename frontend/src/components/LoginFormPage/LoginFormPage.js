@@ -28,7 +28,7 @@ function LoginFormPage() {
   return (
     <form onSubmit={handleSubmit}>
       <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        {errors.map((error, idx) => (<li key={idx}>{error}</li>))}
       </ul>
       <div className='cred-container'>
         <label>
