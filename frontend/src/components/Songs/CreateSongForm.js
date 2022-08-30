@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { getUserAlbums } from "../../store/albums";
 
 
 const CreateSongForm = ( {hideForm}) => {
@@ -8,7 +9,7 @@ const CreateSongForm = ( {hideForm}) => {
     const history = useHistory();
     const sessionUserId = useSelector(state => state.session.user.id);
     console.log(sessionUserId);
-    //need current user for userID, and album choices
+    const albumChoices = useSelector(state => state.albums);
     //collect albums for current user for album choices
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -20,21 +21,21 @@ const CreateSongForm = ( {hideForm}) => {
     const updatePreviewImage = (e) => setPreviewImage(e.target.value);
     const updateAudioURL = (e) => setAudioURL(e.target.value);
 
-    //need to make getUserAlbums
-    // useEffect(() => {
-    //     dispatch(getUserAlbums());
-    // }, [dispatch])
-    const getUserAlbums = async() => {
-        const promiseAlbums = await fetch('/api/albums/session/user');
-        console.log(promiseAlbums);
-        if(promiseAlbums.ok){
-            const returnAlbums = await promiseAlbums.json();
-            console.log(returnAlbums);
-            return returnAlbums;
-        }
-    }
-    const albums = getUserAlbums();
-    console.log(albums);
+    // need to make getUserAlbums
+    useEffect(() => {
+        dispatch(getUserAlbums());
+    }, [dispatch])
+    // const getUserAlbums = async() => {
+    //     const promiseAlbums = await fetch('/api/albums/session/user');
+    //     console.log(promiseAlbums);
+    //     if(promiseAlbums.ok){
+    //         const returnAlbums = await promiseAlbums.json();
+    //         console.log(returnAlbums);
+    //         return returnAlbums;
+    //     }
+    // }
+    // const albums = getUserAlbums();
+    // console.log(albums);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
