@@ -1,0 +1,18 @@
+.song-container{
+    border: 3px solid cyan;
+    background-color: black;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 3px;
+    width: 150px;
+}
+
+.song-title{
+    padding: 0px;
+    margin: 0px;
+}
+
+.song-description{
+    padding: 0px;
+    margin: 0px;
+}

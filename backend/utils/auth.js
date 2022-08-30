@@ -6,10 +6,10 @@ const { secret, expiresIn } = jwtConfig;
 
 
 // Sends a JWT Cookie
-const setTokenCookie = (res, user) => {
+const  setTokenCookie = async (res, user) => {
     // Create the token.
     const token = jwt.sign(
-      { data: user.toSafeObject() },
+      { data: await user.toSafeObject() },
       secret,
       { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
     );
@@ -56,14 +56,27 @@ const restoreUser = (req, res, next) => {
 
 
 // If there is no current user, return an error
-const requireAuth = function (req, _res, next) {
-    if (req.user) return next();
+// const requireAuth = function (req, _res, next) {
+//     if (req.user) return next();
 
-    const err = new Error('Unauthorized');
-    err.message = 'Authentication required';
+//     const err = new Error('Unauthorized');
+//     err.message = 'Authentication required';
+//     err.status = 401;
+//     return next(err);
+//   }
+
+const requireAuth = [
+  restoreUser,
+  function (req, _res, next) {
+    if (req.user) return next();
+    const err = new Error("Unauthorized");
+    err.message = "Authentication required"
     err.status = 401;
     return next(err);
-  }
+  },
+];
+
+
 
 
 module.exports = { setTokenCookie, restoreUser, requireAuth };

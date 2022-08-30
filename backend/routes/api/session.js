@@ -40,7 +40,6 @@ router.post(
     async (req, res, next) => {
       const { email, password } = req.body;
       const user = await User.login({ email, password });
-      const token = await setTokenCookie(res, user)
 
       if (!user) {
         const err = new Error('Invalid Credentials');
@@ -48,14 +47,16 @@ router.post(
         err.title = 'Login failed';
         return next(err);
       }
+      const token = await setTokenCookie(res, user)
 
       const payload = {
         id : user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        // username: user.username,
         token
+        // user: await user.toSafeObject(),
+        // token
       }
       res.status(200);
       return res.json(payload);
