@@ -38,7 +38,6 @@ export const getAlbums = () => async (dispatch) => {
 
 	if (response.ok) {
 		const list = await response.json();
-		// console.log(list);
 		dispatch(loadAllAlbums(list));
 	}
 };
@@ -50,15 +49,6 @@ export const getUserAlbums = () => async (dispatch) => {
         dispatch(loadUserAlbums(promisedAlbums));
     }
 }
-
-// export const getPokemonById = (id) => async (dispatch) => {
-// 	const response = await fetch(`/api/pokemon/${id}`);
-
-// 	if(response.ok){
-// 		const pokemon = await response.json();
-// 		dispatch(addOnePokemon(pokemon))
-// 	}
-// }
 
 export const addAlbum = (album) => async (dispatch) => {
 	const response = await fetch('/api/songs', {
@@ -122,29 +112,6 @@ const albumReducer = (state = initialState, action) => {
                 ...usersAlbums,
                 ...state
             }
-
-		// case ADD:
-		// 	if (!state[action.pokemon.id]) {
-		// 		const newState = {
-		// 			...state,
-		// 			[action.pokemon.id]: action.pokemon,
-		// 		};
-		// 		const pokemonList = newState.list.map((id) => newState[id]);
-		// 		pokemonList.push(action.pokemon);
-		// 		newState.list = sortList(pokemonList);
-		// 		return newState;
-		// 	}
-		// 	return {
-		// 		...state,
-		// 		[action.pokemon.id]: {
-		// 			...state[action.pokemon.id],
-		// 			...action.pokemon,
-		// 		},
-		// 	};
-		// case LOAD_ONE:
-		// 	if(state[action.pokemon.id] === action.id) {
-		// 		return state[action.pokemon]
-		// 	}
 			default:
 			return state;
 	}

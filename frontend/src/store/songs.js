@@ -32,19 +32,9 @@ export const getSongs = () => async (dispatch) => {
 
 	if (response.ok) {
 		const list = await response.json();
-		// console.log(list);
 		dispatch(loadAllSongs(list));
 	}
 };
-
-// export const getPokemonById = (id) => async (dispatch) => {
-// 	const response = await fetch(`/api/pokemon/${id}`);
-
-// 	if(response.ok){
-// 		const pokemon = await response.json();
-// 		dispatch(addOnePokemon(pokemon))
-// 	}
-// }
 
 export const addSong = (song, albumId) => async (dispatch) => {
 	const response = await fetch(`/api/albums/${albumId}/songs`, {
@@ -89,14 +79,12 @@ const songReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case LOAD_ALL:
 			const allSongs = {};
-			// console.log(action.list.Songs);
 			action.list.Songs.forEach((song) => {
 				allSongs[song.id] = song;
 			});
 			return {
 				...allSongs,
 				...state,
-				// list: sortList(action.list),
 			};
 
 		case ADD:
@@ -107,20 +95,15 @@ const songReducer = (state = initialState, action) => {
 				};
 				const songList = newState.list.map((id) => newState[id]);
 				songList.push(action.song);
-				// newState.list = sortList(pokemonList);
 				return newState;
 			}
 			return {
 				...state,
-				[action.pokemon.id]: {
-					...state[action.pokemon.id],
-					...action.pokemon,
+				[action.song.id]: {
+					...state[action.song.id],
+					...action.song,
 				},
 			};
-		// case LOAD_ONE:
-		// 	if(state[action.pokemon.id] === action.id) {
-		// 		return state[action.pokemon]
-		// 	}
 			default:
 			return state;
 	}
