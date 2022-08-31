@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf";
 
 
 const LOAD_ALL = "songs/LOAD";
@@ -36,8 +37,16 @@ export const getSongs = () => async (dispatch) => {
 	}
 };
 
+export const getSongById = (id) => async (dispatch) => {
+	const response = await fetch(`/api/songs/${id}`);
+
+	if(response.ok){
+		const song = await response.json();
+		dispatch(add(song))
+	}
+}
 export const addSong = (song, albumId) => async (dispatch) => {
-	const response = await fetch(`/api/albums/${albumId}/songs`, {
+	const response = await csrfFetch(`/api/albums/${albumId}/songs`, {
 		method: 'POST',
 		headers: {'Content-Type': 'application/json'},
 		body: JSON.stringify(song)
@@ -93,8 +102,6 @@ const songReducer = (state = initialState, action) => {
 					...state,
 					[action.song.id]: action.song,
 				};
-				const songList = newState.list.map((id) => newState[id]);
-				songList.push(action.song);
 				return newState;
 			}
 			return {

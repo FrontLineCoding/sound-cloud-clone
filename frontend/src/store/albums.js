@@ -22,9 +22,9 @@ const edit = (types) => ({
 	types,
 });
 
-const add = (pokemon) => ({
+const add = (album) => ({
 	type: ADD,
-	pokemon,
+	album,
 });
 
 const deleteAlbum = (id) => ({
