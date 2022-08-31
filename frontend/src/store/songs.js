@@ -16,9 +16,9 @@ const edit = (types) => ({
 	types,
 });
 
-const add = (pokemon) => ({
+const add = (song) => ({
 	type: ADD,
-	pokemon,
+	song,
 });
 
 const deleteSong = (id) => ({
@@ -46,8 +46,8 @@ export const getSongs = () => async (dispatch) => {
 // 	}
 // }
 
-export const addSong = (song) => async (dispatch) => {
-	const response = await fetch('/api/songs', {
+export const addSong = (song, albumId) => async (dispatch) => {
+	const response = await fetch(`/api/albums/${albumId}/songs`, {
 		method: 'POST',
 		headers: {'Content-Type': 'application/json'},
 		body: JSON.stringify(song)
@@ -89,7 +89,7 @@ const songReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case LOAD_ALL:
 			const allSongs = {};
-			console.log(action.list.Songs);
+			// console.log(action.list.Songs);
 			action.list.Songs.forEach((song) => {
 				allSongs[song.id] = song;
 			});
@@ -99,24 +99,24 @@ const songReducer = (state = initialState, action) => {
 				// list: sortList(action.list),
 			};
 
-		// case ADD:
-		// 	if (!state[action.pokemon.id]) {
-		// 		const newState = {
-		// 			...state,
-		// 			[action.pokemon.id]: action.pokemon,
-		// 		};
-		// 		const pokemonList = newState.list.map((id) => newState[id]);
-		// 		pokemonList.push(action.pokemon);
-		// 		newState.list = sortList(pokemonList);
-		// 		return newState;
-		// 	}
-		// 	return {
-		// 		...state,
-		// 		[action.pokemon.id]: {
-		// 			...state[action.pokemon.id],
-		// 			...action.pokemon,
-		// 		},
-		// 	};
+		case ADD:
+			if (!state[action.song.id]) {
+				const newState = {
+					...state,
+					[action.song.id]: action.song,
+				};
+				const songList = newState.list.map((id) => newState[id]);
+				songList.push(action.song);
+				// newState.list = sortList(pokemonList);
+				return newState;
+			}
+			return {
+				...state,
+				[action.pokemon.id]: {
+					...state[action.pokemon.id],
+					...action.pokemon,
+				},
+			};
 		// case LOAD_ONE:
 		// 	if(state[action.pokemon.id] === action.id) {
 		// 		return state[action.pokemon]

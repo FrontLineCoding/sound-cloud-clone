@@ -1,7 +1,7 @@
 
 
 const LOAD_ALL = "albums/LOAD";
-const LOAD_USERS = "albums/LOAD_USERS";
+const USERS = "albums/USERS";
 const EDIT = "albums/EDIT";
 const ADD = "albums/ADD";
 const DELETE = "albums/DELETE";
@@ -13,7 +13,7 @@ const loadAllAlbums = (list) => ({
 });
 
 const loadUserAlbums = (ownedAlbums) => ({
-    type: LOAD_USERS,
+    type: USERS,
     ownedAlbums
 })
 
@@ -43,11 +43,11 @@ export const getAlbums = () => async (dispatch) => {
 	}
 };
 
-export const getUserAlbums = async (dispatch) => {
+export const getUserAlbums = () => async (dispatch) => {
     const promise = await fetch('/api/albums/session/user');
     if(promise.ok){
         const promisedAlbums = await promise.json();
-        dispatch(loadUserAlbums(promisedAlbums)) ;
+        dispatch(loadUserAlbums(promisedAlbums));
     }
 }
 
@@ -112,9 +112,12 @@ const albumReducer = (state = initialState, action) => {
 		// 		...state,
 		// 		// list: sortList(action.list),
 		// 	};
-        case LOAD_USERS:
+        case USERS:
             const usersAlbums = {};
             console.log(action);
+			action.ownedAlbums.Albums.forEach((album) => {
+				usersAlbums[album.id] = album;
+			})
             return {
                 ...usersAlbums,
                 ...state

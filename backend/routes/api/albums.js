@@ -54,6 +54,7 @@ router.get('/session/user', async (req,res) => {
 router.post('/:albumId/songs', validateBodyAddSong, requireAuth, async (req, res) => {
     const { albumId } = req.params;
     const { user } = req;
+    console.log(user);
     const album = await Album.findOne({
         where: {id: albumId},
         include: [User]
