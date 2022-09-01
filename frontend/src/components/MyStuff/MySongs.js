@@ -1,28 +1,18 @@
 import { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
-import {getSongs, getUserSongs} from '../../store/songs'
-import CreateSongForm from './CreateSongForm';
-import SongDetail from './SongDetail';
-import Fab from './Fab';
-import './ListSongs.css'
+import CreateSongForm from '../Songs/CreateSongForm';
+import SongDetail from '../Songs/SongDetail';
+import { userSongs } from '../Navigation/MyStuff';
+import Fab from '../Songs/Fab';
 
-export let songs;
-const ListSongs = () => {
-    const dispatch = useDispatch();
 
-    songs = useSelector(state => {
-        const songArr = Object.values(state.song)
-        return songArr
-      });
+const MySongs = ({user}) => {
+    const username = useSelector(state => state.session.user.username);
     const [showForm, setShowForm] = useState(false);
 
 
-    useEffect(() => {
-        dispatch(getSongs());
-    },[dispatch]);
-
-    if (!songs) {
+    if (!userSongs) {
         return null;
       }
 
@@ -30,9 +20,9 @@ const ListSongs = () => {
         <main>
             <nav>
             <Fab hidden={showForm} onClick={() => setShowForm(true)} />
-                {songs.map((song) => {
+                {userSongs.map((song) => {
                     return(
-                        <NavLink key={song.id} to={`/songs/${song.id}`}>
+                        <NavLink key={song.id} to={`/${username}/songs/${song.id}`}>
                             <div className='song-container'>
                                 <h2 className='song-title'>{song.title}</h2>
                                 {/* <p className='song-description'>{song.description}</p> */}
@@ -44,7 +34,7 @@ const ListSongs = () => {
             {showForm ? (
             <CreateSongForm hideForm={() => setShowForm(false)} />
             ) : (
-            <Route path="/songs/:songId">
+            <Route path={`/${username}/songs/:songId`}>
                 <SongDetail/>
             </Route>
             )}
@@ -52,4 +42,4 @@ const ListSongs = () => {
     )
 }
 
-export default ListSongs;
+export default MySongs;

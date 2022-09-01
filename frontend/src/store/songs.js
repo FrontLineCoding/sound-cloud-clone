@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 
 const LOAD_ALL = "songs/LOAD";
+const USERS = "songs/USERS";
 const EDIT = "songs/EDIT";
 const ADD = "songs/ADD";
 const DELETE = "songs/DELETE";
@@ -11,6 +12,11 @@ const loadAllSongs = (list) => ({
 	type: LOAD_ALL,
 	list,
 });
+
+const loadUserSongs = (ownedSongs) => ({
+    type: USERS,
+    ownedSongs
+})
 
 const edit = (types) => ({
 	type: EDIT,
@@ -36,6 +42,14 @@ export const getSongs = () => async (dispatch) => {
 		dispatch(loadAllSongs(list));
 	}
 };
+
+export const getUserSongs = () => async (dispatch) => {
+	const promise = await fetch('/api/songs/session/user');
+    if(promise.ok){
+        const promisedSongs = await promise.json();
+        dispatch(loadUserSongs(promisedSongs));
+    }
+}
 
 export const getSongById = (id) => async (dispatch) => {
 	const response = await fetch(`/api/songs/${id}`);
@@ -111,8 +125,8 @@ const songReducer = (state = initialState, action) => {
 					...action.song,
 				},
 			};
-			default:
-			return state;
+		default:
+		return state;
 	}
 };
 

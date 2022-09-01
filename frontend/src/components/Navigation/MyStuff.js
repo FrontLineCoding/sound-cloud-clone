@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import * as sessionActions from '../../store/session';
+import { songs } from '../Songs/ListSongs';
 
+export const userSongs = []
 function MyStuff({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  // console.log(songs);
+  if(songs && !userSongs.length){
+      songs.map((song) => {
+        if(song.userId === user.id) {userSongs.push(song)}
+        else{return}
+      })
+      console.log(userSongs);
+  }
 
   const openMenu = () => {
     if (showMenu) return;
@@ -24,10 +34,6 @@ function MyStuff({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const logout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-  };
 
   return (
     <>

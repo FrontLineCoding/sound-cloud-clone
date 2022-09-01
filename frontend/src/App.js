@@ -6,6 +6,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import ListSongs from "./components/Songs/ListSongs";
+import MySongs from "./components/MyStuff/MySongs";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,6 +20,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path={[`/:username/songs`, '/:username/songs/:songId']}>
+            <MySongs></MySongs>
+          </Route>
           <Route path="/login">
             <LoginFormPage />
           </Route>
@@ -28,6 +32,7 @@ function App() {
           <Route path={['/', '/songs', '/songs/:songId']}>
             <ListSongs />
           </Route>
+
 
         </Switch>
       )}
