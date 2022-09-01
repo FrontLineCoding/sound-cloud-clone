@@ -1,0 +1,11 @@
+.song-detail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.action-buttons{
+    height: 2em;
+}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
 import CreateSongForm from '../Songs/CreateSongForm';
-import SongDetail from '../Songs/SongDetail';
+import MySongDetail from './MySongDetail';
 import { userSongs } from '../Navigation/MyStuff';
 import Fab from '../Songs/Fab';
 
@@ -25,7 +25,6 @@ const MySongs = ({user}) => {
                         <NavLink key={song.id} to={`/${username}/songs/${song.id}`}>
                             <div className='song-container'>
                                 <h2 className='song-title'>{song.title}</h2>
-                                {/* <p className='song-description'>{song.description}</p> */}
                             </div>
                         </NavLink>
                     )
@@ -35,7 +34,7 @@ const MySongs = ({user}) => {
             <CreateSongForm hideForm={() => setShowForm(false)} />
             ) : (
             <Route path={`/${username}/songs/:songId`}>
-                <SongDetail/>
+                <MySongDetail/>
             </Route>
             )}
         </main>
