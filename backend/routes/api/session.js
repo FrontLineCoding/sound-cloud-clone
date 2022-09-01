@@ -27,7 +27,7 @@ router.get('/user', requireAuth, async (req, res) => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    // username: user.username,
+    username: user.username,
     token
   }
   return res.json(payload);

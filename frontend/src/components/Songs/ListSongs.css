@@ -1,3 +1,18 @@
+main {
+    bottom: 0;
+    display: flex;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 80px;
+    z-index: -1;
+  }
+
+nav {
+    flex: 0 0 200px;
+    overflow-y: auto;
+  }
+
 .song-container{
     border: 3px solid cyan;
     background-color: black;
@@ -15,4 +30,11 @@
 .song-description{
     padding: 0px;
     margin: 0px;
+}
+
+.song-detail{
+    display: flex;
+    flex: 1 0 0;
+    justify-content: center;
+    overflow-y: auto;
 }

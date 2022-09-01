@@ -28,16 +28,6 @@ const ListSongs = () => {
       }
 
     return (
-        // <>
-        //     {songs.map((song) => {
-        //         return (
-        //             <div className='song-container'>
-        //                 <h2 className='song-title'>{song.title}</h2>
-        //                 <p className='song-description'>{song.description}</p>
-        //             </div>
-        //         )
-        //     })}
-        // </>
         <main>
             <nav>
             <Fab hidden={showForm} onClick={() => setShowForm(true)} />
@@ -55,7 +45,7 @@ const ListSongs = () => {
             {showForm ? (
             <CreateSongForm hideForm={() => setShowForm(false)} />
             ) : (
-            <Route path="/song/:songId">
+            <Route path="/songs/:songId">
                 <SongDetail/>
             </Route>
             )}

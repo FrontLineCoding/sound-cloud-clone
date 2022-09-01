@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import ListSongs from '../Songs/ListSongs';
+import MyStuff from './MyStuff';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -12,8 +13,8 @@ function Navigation({ isLoaded }){
   if (sessionUser) {
     sessionLinks = (
       <>
-        <ProfileButton user={sessionUser} />
-        <NavLink to="/songs">All Songs</NavLink>
+        <MyStuff user={sessionUser} className='my-stuff-dropdown'></MyStuff>
+        <ProfileButton user={sessionUser} className='profile-button'/>
       </>
     );
   } else {
@@ -28,7 +29,7 @@ function Navigation({ isLoaded }){
   return (
     <div>
       <ul>
-        <li>
+        <li className='nav-items'>
           <NavLink exact to="/">Home</NavLink>
           {isLoaded && sessionLinks}
         </li>
