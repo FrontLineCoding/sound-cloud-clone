@@ -3,14 +3,23 @@ import {useDispatch, useSelector} from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
 import CreateSongForm from '../Songs/CreateSongForm';
 import MySongDetail from './MySongDetail';
-import { userSongs } from '../Navigation/MyStuff';
 import Fab from '../Songs/Fab';
+import EditSongForm from './EditSong';
 
 
 const MySongs = ({user}) => {
     const username = useSelector(state => state.session.user.username);
+    const sessionUserId = useSelector(state => state.session.user.id);
+    const userSongs = [];
+    const allSongs = useSelector(state =>  Object.values(state.song));
     const [showForm, setShowForm] = useState(false);
-
+    allSongs.map((song) => {
+        if(song.userId === sessionUserId) {
+            userSongs.push(song);
+        }else{
+            return
+        }
+    });
 
     if (!userSongs) {
         return null;
@@ -34,7 +43,7 @@ const MySongs = ({user}) => {
             <CreateSongForm hideForm={() => setShowForm(false)} />
             ) : (
             <Route path={`/${username}/songs/:songId`}>
-                <MySongDetail/>
+                <MySongDetail hideForm={() => setShowForm(false)}/>
             </Route>
             )}
         </main>

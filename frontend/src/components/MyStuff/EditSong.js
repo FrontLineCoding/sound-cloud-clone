@@ -1,32 +1,34 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { addSong } from "../../store/songs";
+import { useHistory, useParams } from "react-router-dom";
+import { editSong } from "../../store/songs";
 
 
-const CreateSongForm = ( {hideForm}) => {
+const EditSongForm = ( {editing, setEditing}) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const {songId} = useParams();
     const sessionUserId = useSelector(state => state.session.user.id);
     const username = useSelector(state => state.session.user.username);
     const albums = useSelector(state => Object.values(state.albums));
+    const albumsObj = useSelector(state => state.albums);
     const userAlbums = []
     albums.map((album) => {
         if(album.userId === sessionUserId) userAlbums.push(album)
-    })
+    });
+    const editingSong = useSelector(state => state.song[songId]);
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [previewImage, setPreviewImage] = useState('');
-    const [audioURL, setAudioURL] = useState('');
-    const [albumId, setAlbumId] = useState(userAlbums[0].id);
+    const [title, setTitle] = useState(`${editingSong.title}`);
+    const [description, setDescription] = useState(`${editingSong.description}`);
+    const [previewImage, setPreviewImage] = useState(`${editingSong.previewImage}`);
+    const [audioURL, setAudioURL] = useState(`${editingSong.url}`);
 
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateDescription = (e) => setDescription(e.target.value);
     const updatePreviewImage = (e) => setPreviewImage(e.target.value);
     const updateAudioURL = (e) => setAudioURL(e.target.value);
-    const updateAlbumId = (e) => setAlbumId(e.target.value);
+
 
 
     const handleSubmit = async (e) => {
@@ -39,16 +41,16 @@ const CreateSongForm = ( {hideForm}) => {
             url: audioURL
         };
 
-        let createdSong = await dispatch(addSong(payload, albumId));
-        if(createdSong){
-            history.push(`/${username}/songs/${createdSong.id}`);
+        let updatedSong = await dispatch(editSong(payload, songId));
+        if(updatedSong){
+            history.push(`/${username}/songs/${updatedSong.id}`);
         }
-        hideForm();
+        setEditing(false);
     }
 
     const handleCancelClick = (e) => {
         e.preventDefault();
-        hideForm();
+        setEditing(false);
       };
 
       return (
@@ -74,18 +76,11 @@ const CreateSongForm = ( {hideForm}) => {
                         placeholder="Audio URL"
                         value={audioURL}
                         onChange={updateAudioURL} />
-                    <select onClick={updateAlbumId} onChange={updateAlbumId} value={albumId}>
-                        {
-                            userAlbums.map(album =>
-                            <option key={album.id} value={album.id}>{album.title}</option>
-                            )
-                        }
-                    </select>
-                    <button type="submit">Create new Song</button>
+                    <button type="submit">Update Song</button>
                     <button type="button" onClick={handleCancelClick}>Cancel</button>
                 </form>
             </section>
         )
 }
 
-export default CreateSongForm;
+export default EditSongForm;

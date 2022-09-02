@@ -91,25 +91,14 @@ const initialState = {
 };
 const albumReducer = (state = initialState, action) => {
 	switch (action.type) {
-		// case LOAD_ALL:
-		// 	const allSongs = {};
-		// 	console.log(action.list.Songs);
-		// 	action.list.Songs.forEach((song) => {
-		// 		allSongs[song.id] = song;
-		// 	});
-		// 	return {
-		// 		...allSongs,
-		// 		...state,
-		// 		// list: sortList(action.list),
-		// 	};
-        case USERS:
-            const usersAlbums = {};
+        case LOAD_ALL:
+            const albums = {};
             console.log(action);
-			action.ownedAlbums.Albums.forEach((album) => {
-				usersAlbums[album.id] = album;
+			action.list.Albums.forEach((album) => {
+				albums[album.id] = album;
 			})
             return {
-                ...usersAlbums,
+                ...albums,
                 ...state
             }
 			default:

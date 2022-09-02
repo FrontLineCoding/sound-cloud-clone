@@ -18,9 +18,9 @@ const loadUserSongs = (ownedSongs) => ({
     ownedSongs
 })
 
-const edit = (types) => ({
+const edit = (song) => ({
 	type: EDIT,
-	types,
+	song,
 });
 
 const add = (song) => ({
@@ -73,9 +73,9 @@ export const addSong = (song, albumId) => async (dispatch) => {
 	}
 }
 
-export const editsong = (song) => async dispatch => {
+export const editSong = (song, albumId, songId) => async dispatch => {
 	console.log(song)
-	const response = await fetch(`/api/songs/${song.id}`, {
+	const response = await csrfFetch(`/api/songs/${songId}`, {
 		method: 'PUT',
 		headers: {'Content-Type' : 'application/json'},
 		body: JSON.stringify(song)
@@ -83,17 +83,24 @@ export const editsong = (song) => async dispatch => {
 
 	if(response.ok){
 		const song = await response.json();
-		dispatch(add(song));
+		dispatch(edit(song));
 		return song;
 	}
 }
-const sortList = (list) => {
-	return list
-		.sort((songA, songB) => {
-			return songA.id - songB.id;
-		})
-		.map((song) => song.id);
-};
+
+export const deleteUserSong = (songId) => async dispatch => {
+	console.log(songId);
+	const response = await csrfFetch(`/api/songs/${songId}`,{
+		method: 'DELETE'
+		}
+	);
+	if(response.ok){
+		const returnValue = response.json();
+		dispatch(deleteSong(songId))
+		return returnValue;
+	}
+}
+
 
 const initialState = {
 	// list: []
@@ -125,8 +132,17 @@ const songReducer = (state = initialState, action) => {
 					...action.song,
 				},
 			};
+		case DELETE:
+			const newState = { ...state };
+			delete newState[action.id];
+			return newState;
+		case EDIT:
+			return {
+				...state,
+				[action.song.id]: action.song
+			}
 		default:
-		return state;
+			return state;
 	}
 };
 

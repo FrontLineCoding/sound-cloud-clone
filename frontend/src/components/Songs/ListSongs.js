@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
 import {getSongs, getUserSongs} from '../../store/songs'
+import { getAlbums } from '../../store/albums';
 import CreateSongForm from './CreateSongForm';
 import SongDetail from './SongDetail';
 import Fab from './Fab';
@@ -20,6 +21,7 @@ const ListSongs = () => {
 
     useEffect(() => {
         dispatch(getSongs());
+        dispatch(getAlbums());
     },[dispatch]);
 
     if (!songs) {
