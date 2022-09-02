@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import ListSongs from '../Songs/ListSongs';
 import MyStuff from './MyStuff';
 import './Navigation.css';
+import DemoUser from '../DemoUser/DemoUser';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
@@ -22,6 +23,8 @@ function Navigation({ isLoaded }){
       <>
         <NavLink to="/login">Log In</NavLink>
         <NavLink to="/signup">Sign Up</NavLink>
+        <NavLink to='/'><DemoUser>Demo Login</DemoUser></NavLink>
+
       </>
     );
   }

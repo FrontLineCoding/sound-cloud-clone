@@ -73,7 +73,7 @@ export const addSong = (song, albumId) => async (dispatch) => {
 	}
 }
 
-export const editSong = (song, albumId, songId) => async dispatch => {
+export const editSong = (song, songId) => async dispatch => {
 	console.log(song)
 	const response = await csrfFetch(`/api/songs/${songId}`, {
 		method: 'PUT',
