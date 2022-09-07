@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf";
 
 
 const LOAD_ALL = "albums/LOAD";
@@ -51,7 +52,7 @@ export const getUserAlbums = () => async (dispatch) => {
 }
 
 export const addAlbum = (album) => async (dispatch) => {
-	const response = await fetch('/api/songs', {
+	const response = await fetch('/api/albums', {
 		method: 'POST',
 		headers: {'Content-Type': 'application/json'},
 		body: JSON.stringify(album)
@@ -64,7 +65,7 @@ export const addAlbum = (album) => async (dispatch) => {
 	}
 }
 
-export const editsong = (album) => async dispatch => {
+export const editAlbum = (album) => async dispatch => {
 	console.log(album)
 	const response = await fetch(`/api/albums/${album.id}`, {
 		method: 'PUT',
@@ -78,13 +79,17 @@ export const editsong = (album) => async dispatch => {
 		return album;
 	}
 }
-const sortList = (list) => {
-	return list
-		.sort((albumA, albumB) => {
-			return albumA.id - albumB.id;
-		})
-		.map((album) => album.id);
-};
+export const deleteUserAlbum = (albumId) => async dispatch => {
+	const response = await csrfFetch(`/api/albums/${albumId}`,{
+		method: 'DELETE'
+		}
+	);
+	if(response.ok){
+		const returnValue = response.json();
+		dispatch(deleteAlbum(albumId))
+		return returnValue;
+	}
+}
 
 const initialState = {
 	// list: []
@@ -101,8 +106,33 @@ const albumReducer = (state = initialState, action) => {
                 ...albums,
                 ...state
             }
-			default:
 			return state;
+			case ADD:
+				if (!state[action.album.id]) {
+					const newState = {
+						...state,
+						[action.album.id]: action.album,
+					};
+					return newState;
+				}
+				return {
+					...state,
+					[action.album.id]: {
+						...state[action.album.id],
+						...action.album,
+					},
+				};
+			case DELETE:
+				const newState = { ...state };
+				delete newState[action.id];
+				return newState;
+			case EDIT:
+				return {
+					...state,
+					[action.album.id]: action.album
+				}
+			default:
+				return state;
 	}
 };
 

@@ -14,9 +14,14 @@ const SongDetail = () => {
         dispatch(getSongById(songId));
     }, [dispatch]);
 
+
     return (
         <div className="song-detail">
+            <img src={song.previewImage}/>
             <h2>{song.title}</h2>
+            {/* <h3>{song.Artist.username}</h3> */}
+            <p>{song.description}</p>
+            {/* <p>{song.Album.title}</p> */}
         </div>
     )
 }

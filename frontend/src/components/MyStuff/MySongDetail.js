@@ -39,6 +39,9 @@ const MySongDetail = ({hideForm}) => {
                     </div>
                     <img src={song.previewImage}/>
                     <h2>{song.title}</h2>
+                    <h3>{song.Artist.username}</h3>
+                    <p>{song.description}</p>
+                    <p>{song.Album.title}</p>
                 </div>
             )}
         </>

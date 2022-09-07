@@ -12,12 +12,16 @@ nav {
     flex: 0 0 200px;
     overflow-y: auto;
   }
+nav a{
+    /* margin: 0px 5px 0px 5px; */
+    margin-bottom: 2.5px;
+}
 
 .song-container{
     border: 3px solid cyan;
     background-color: black;
     border-radius: 5px;
-    margin: 5px;
+    margin: 1px 5px 1px 5px;
     padding: 3px;
     width: 150px;
 }
@@ -37,4 +41,26 @@ nav {
     flex: 1 0 0;
     justify-content: center;
     overflow-y: auto;
+}
+
+nav h3 {
+text-align: center;
+margin: 0 30px 10px 0;
+font-weight: 900;
+font-size: 30px;
+}
+
+.fab{
+    display: flex;
+    margin-bottom:  10px;
+}
+
+.fab:hover {
+    cursor: pointer;
+}
+
+.create{
+    padding-left: 7px;
+    font-weight: 600;
+    font-size: 20px;
 }

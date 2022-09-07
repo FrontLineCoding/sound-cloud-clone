@@ -7,6 +7,7 @@ import CreateSongForm from './CreateSongForm';
 import SongDetail from './SongDetail';
 import Fab from './Fab';
 import './ListSongs.css'
+import Comments from '../Comments';
 
 export let songs;
 const ListSongs = () => {
@@ -31,7 +32,8 @@ const ListSongs = () => {
     return (
         <main>
             <nav>
-            <Fab hidden={showForm} onClick={() => setShowForm(true)} />
+            {/* <Fab hidden={showForm} onClick={() => setShowForm(true)} /> */}
+            <h3>All songs</h3>
                 {songs.map((song) => {
                     return(
                         <NavLink key={song.id} to={`/songs/${song.id}`}>
@@ -47,7 +49,10 @@ const ListSongs = () => {
             <CreateSongForm hideForm={() => setShowForm(false)} />
             ) : (
             <Route path="/songs/:songId">
-                <SongDetail/>
+                <div className='song-detail'>
+                    <SongDetail/>
+                    <Comments/>
+                </div>
             </Route>
             )}
         </main>
