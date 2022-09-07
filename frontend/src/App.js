@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import ListSongs from "./components/Songs/ListSongs";
 import MySongs from "./components/MyStuff/MySongs";
+import ListAlbums from "./components/Albums/ListAlbums";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,10 +30,12 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path={['/', '/songs', '/songs/:songId']}>
+          <Route exact path={['/', '/songs', '/songs/:songId']}>
             <ListSongs />
           </Route>
-
+          <Route exact path={['/albums', '/albums/:albumId']}>
+            <ListAlbums />
+          </Route>
 
         </Switch>
       )}

@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 
 
 const LOAD_ALL = "albums/LOAD";
-const USERS = "albums/USERS";
+const USERS_ALBUMS = "albums/USERS";
 const EDIT = "albums/EDIT";
 const ADD = "albums/ADD";
 const DELETE = "albums/DELETE";
@@ -14,7 +14,7 @@ const loadAllAlbums = (list) => ({
 });
 
 const loadUserAlbums = (ownedAlbums) => ({
-    type: USERS,
+    type: USERS_ALBUMS,
     ownedAlbums
 })
 
@@ -49,6 +49,15 @@ export const getUserAlbums = () => async (dispatch) => {
         const promisedAlbums = await promise.json();
         dispatch(loadUserAlbums(promisedAlbums));
     }
+}
+
+export const getAlbumById = (id) => async (dispatch) => {
+	const response = await fetch(`/api/albums/${id}`);
+
+	if(response.ok){
+		const album = await response.json();
+		dispatch(add(album))
+	}
 }
 
 export const addAlbum = (album) => async (dispatch) => {
@@ -98,7 +107,6 @@ const albumReducer = (state = initialState, action) => {
 	switch (action.type) {
         case LOAD_ALL:
             const albums = {};
-            console.log(action);
 			action.list.Albums.forEach((album) => {
 				albums[album.id] = album;
 			})
@@ -106,7 +114,6 @@ const albumReducer = (state = initialState, action) => {
                 ...albums,
                 ...state
             }
-			return state;
 			case ADD:
 				if (!state[action.album.id]) {
 					const newState = {
@@ -131,7 +138,16 @@ const albumReducer = (state = initialState, action) => {
 					...state,
 					[action.album.id]: action.album
 				}
-			default:
+			case USERS_ALBUMS:
+				const userAlbums = {};
+				action.ownedAlbums.forEach((album) => {
+					userAlbums[album.id] = album;
+				})
+				return {
+					...userAlbums,
+					...state
+				}
+				default:
 				return state;
 	}
 };

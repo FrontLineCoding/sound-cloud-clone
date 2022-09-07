@@ -8,7 +8,6 @@ function MyStuff({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const username = useSelector(state => state.session.user.username);
-  console.log(username);
 
 
 
@@ -39,7 +38,8 @@ function MyStuff({ user }) {
         {showMenu && (
             <ul className="my-stuff-dropdown">
                 <li>
-                    <NavLink to={`/${username}/songs`}>My Songs</NavLink>
+                    <NavLink className='my-stuff' to={`/${username}/songs`}>My Songs</NavLink>
+                    <NavLink className='my-stuff' to={`/${username}/albums`}>My Albums</NavLink>
                 </li>
             </ul>
         )}

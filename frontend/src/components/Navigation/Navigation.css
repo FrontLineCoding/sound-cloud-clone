@@ -53,3 +53,15 @@ a{
 .my-stuff-button:hover{
     cursor: pointer;
 }
+
+.my-stuff-dropdown{
+    position: absolute;
+    display: flex;
+    width: auto;
+    offset-position: top 100px;
+}
+
+.my-stuff{
+    margin: 10px;
+    width: 100%;
+}
