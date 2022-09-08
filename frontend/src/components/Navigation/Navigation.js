@@ -14,6 +14,8 @@ function Navigation({ isLoaded }){
   if (sessionUser) {
     sessionLinks = (
       <>
+        <NavLink exact to="/">Home</NavLink>
+        <NavLink to='/albums'>Albums</NavLink>
         <MyStuff user={sessionUser} className='my-stuff-dropdown'></MyStuff>
         <ProfileButton user={sessionUser} className='profile-button'/>
       </>
@@ -33,8 +35,6 @@ function Navigation({ isLoaded }){
     <div>
       <ul>
         <li className='nav-items'>
-          <NavLink exact to="/">Home</NavLink>
-          <NavLink to='/albums'>Albums</NavLink>
           {isLoaded && sessionLinks}
         </li>
       </ul>
