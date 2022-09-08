@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { deleteUserAlbum, getAlbumById } from "../../store/albums";
-import EditSongForm from "../MyStuff/EditSong";
 import '../MyStuff/MyStuff.css';
+import EditAlbum from "./EditAlbum";
 
-//TODO:ONLY copied and pasted this
 const MyAlbumDetail = ({hideForm}) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -31,7 +30,7 @@ const MyAlbumDetail = ({hideForm}) => {
     return (
         <>
             {editing ? (
-            <EditSongForm editing={editing} setEditing={setEditing}/>
+            <EditAlbum editing={editing} setEditing={setEditing}/>
             ) : (
                 <div className="song-detail">
                     <div className="action-buttons">

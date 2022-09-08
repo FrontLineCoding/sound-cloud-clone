@@ -74,9 +74,10 @@ export const addAlbum = (album) => async (dispatch) => {
 	}
 }
 
-export const editAlbum = (album) => async dispatch => {
+export const editAlbum = (album, albumId) => async dispatch => {
 	console.log(album)
-	const response = await fetch(`/api/albums/${album.id}`, {
+	console.log(albumId);
+	const response = await csrfFetch(`/api/albums/${albumId}`, {
 		method: 'PUT',
 		headers: {'Content-Type' : 'application/json'},
 		body: JSON.stringify(album)
