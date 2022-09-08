@@ -25,8 +25,8 @@ const CreateAlbumForm = ( {hideForm}) => {
     const updateTitle = (e) => setTitle(e.target.value);
     const updateDescription = (e) => setDescription(e.target.value);
     const updatePreviewImage = (e) => setPreviewImage(e.target.value);
-    const updateAudioURL = (e) => setAudioURL(e.target.value);
-    const updateAlbumId = (e) => setAlbumId(e.target.value);
+    // const updateAudioURL = (e) => setAudioURL(e.target.value);
+    // const updateAlbumId = (e) => setAlbumId(e.target.value);
 
 
     const handleSubmit = async (e) => {

@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import ListSongs from "./components/Songs/ListSongs";
 import MySongs from "./components/MyStuff/MySongs";
 import ListAlbums from "./components/Albums/ListAlbums";
+import MyAlbums from "./components/MyAlbums/MyAlbums";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ function App() {
         <Switch>
           <Route path={[`/:username/songs`, '/:username/songs/:songId']}>
             <MySongs></MySongs>
+          </Route>
+          <Route path={[`/:username/albums`, '/:username/albums/:albumId']}>
+            <MyAlbums></MyAlbums>
           </Route>
           <Route path="/login">
             <LoginFormPage />

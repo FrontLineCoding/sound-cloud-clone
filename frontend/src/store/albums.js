@@ -61,7 +61,7 @@ export const getAlbumById = (id) => async (dispatch) => {
 }
 
 export const addAlbum = (album) => async (dispatch) => {
-	const response = await fetch('/api/albums', {
+	const response = await csrfFetch('/api/albums', {
 		method: 'POST',
 		headers: {'Content-Type': 'application/json'},
 		body: JSON.stringify(album)
@@ -140,12 +140,12 @@ const albumReducer = (state = initialState, action) => {
 				}
 			case USERS_ALBUMS:
 				const userAlbums = {};
-				action.ownedAlbums.forEach((album) => {
+				action.ownedAlbums.Albums.forEach((album) => {
 					userAlbums[album.id] = album;
 				})
 				return {
+					...state,
 					...userAlbums,
-					...state
 				}
 				default:
 				return state;
