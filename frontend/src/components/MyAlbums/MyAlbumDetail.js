@@ -10,7 +10,8 @@ const MyAlbumDetail = ({hideForm}) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { albumId } = useParams();
-    const album = useSelector(state => state.album[albumId]);
+    const album = useSelector(state => state.albums[albumId]);
+    console.log(album);
     const username = useSelector(state => state.session.user.username);
     const [editing, setEditing] = useState(false);
 
@@ -41,7 +42,7 @@ const MyAlbumDetail = ({hideForm}) => {
                     <h2>{album.title}</h2>
                     <h3>{album.Artist.username}</h3>
                     <p>{album.description}</p> */}
-                    <p>{album.Album.title}</p>
+                    <p>{album.title}</p>
                 </div>
             )}
         </>
