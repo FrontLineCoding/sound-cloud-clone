@@ -47,6 +47,9 @@ function App() {
         </Switch>
       ):(
       <>
+          <Route exact path='/'>
+            <SplashPage></SplashPage>
+          </Route>
           <Route path="/login">
             <LoginFormPage />
           </Route>

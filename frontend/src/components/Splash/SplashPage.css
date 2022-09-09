@@ -1,0 +1,13 @@
+.main-box{
+    border: 8px solid cyan;
+    border-radius: 10px;
+    width: 35rem;
+    height: 25rem;
+    margin-left: 10rem;
+    margin-top: 10rem;
+}
+
+.slides{
+    font-size: 60px;
+    padding: 0 15px 0 15px;
+}
