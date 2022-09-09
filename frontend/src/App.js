@@ -10,6 +10,7 @@ import MySongs from "./components/MyStuff/MySongs";
 import ListAlbums from "./components/Albums/ListAlbums";
 import MyAlbums from "./components/MyAlbums/MyAlbums";
 import SplashPage from "./components/Splash/SplashPage";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function App() {
           </Route>
 
         </Switch>
+
       ):(
       <>
           <Route exact path='/'>
@@ -58,6 +60,7 @@ function App() {
           </Route>
       </>
       )}
+      <Footer/>
     </>
   );
 }

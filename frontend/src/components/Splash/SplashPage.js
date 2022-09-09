@@ -35,7 +35,9 @@ const SplashPage = () => {
 
     return (
         <div className="main-box">
-            <p className="slides">{slides[selected]}</p>
+            <div className="slides-box">
+                <p className="slides">{slides[selected]}</p>
+            </div>
         </div>
     )
 }

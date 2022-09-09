@@ -33,7 +33,7 @@ function Navigation({ isLoaded }){
 
   return (
     <div>
-      <ul>
+      <ul className='nav-bar'>
         <li className='nav-items'>
           {isLoaded && sessionLinks}
         </li>

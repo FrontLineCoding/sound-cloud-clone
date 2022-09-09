@@ -1,4 +1,12 @@
 .main-box{
+    display: flex;
+    justify-content: center;
+    height: 47rem;
+}
+
+.slides-box{
+    display: flex;
+    justify-content: center;
     border: 8px solid cyan;
     border-radius: 10px;
     width: 35rem;

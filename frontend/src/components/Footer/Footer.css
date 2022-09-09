@@ -1,0 +1,17 @@
+/* .footer-div{
+    display: flex;
+    bottom: 0;
+} */
+
+.footer {
+    list-style: none;
+    background-color: gray;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    margin: 20px 0px 0px 0px;
+}
+
+.footer-item{
+    font-size: 20px;
+}
