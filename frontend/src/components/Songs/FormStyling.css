@@ -1,0 +1,46 @@
+.create-song-form{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+    background-color: black;
+    height: 25px;
+    margin: 3px;
+    color: cyan;
+}
+input:hover{
+    background-color: rgba(0, 255, 255, 0.593);
+    border: 3px solid black;
+    border-radius: 5px;
+}
+
+select{
+    margin-top: 3px;
+    background-color: cyan;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+select:hover{
+    cursor: pointer;
+}
+option{
+    background-color: gray;
+}
+option:hover{
+    background-color: cyan;
+    cursor: pointer;
+}
+
+button{
+    margin: 0;
+    margin-top: 10px;
+    background-color:rgb(0, 255, 255);
+    border: 3px solid black;
+    border-radius: 15px;
+    font-weight: 600;
+}
+button:hover{
+    cursor: pointer;
+}

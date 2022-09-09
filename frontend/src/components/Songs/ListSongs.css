@@ -65,3 +65,8 @@ font-size: 30px;
     font-weight: 600;
     font-size: 20px;
 }
+ .song-detail img {
+    width: 250px;
+    height: 250px;
+    padding: 8px;
+ }

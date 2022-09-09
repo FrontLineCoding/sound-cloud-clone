@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import * as sessionActions from '../../store/session';
+import './Navigation.css'
 
 export const userSongs = []
 function MyStuff({ user }) {
@@ -34,11 +35,13 @@ function MyStuff({ user }) {
         <button onClick={openMenu} className='my-stuff-button'>
             My Stuff
         </button>
-        <div>
+        <div className="my-stuff-div">
         {showMenu && (
             <ul className="my-stuff-dropdown">
                 <li>
                     <NavLink className='my-stuff' to={`/${username}/songs`}>My Songs</NavLink>
+                </li>
+                <li>
                     <NavLink className='my-stuff' to={`/${username}/albums`}>My Albums</NavLink>
                 </li>
             </ul>

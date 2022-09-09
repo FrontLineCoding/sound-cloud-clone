@@ -17,7 +17,8 @@ html{
     border-radius: 50px;
     height: 40px;
     color: white;
-    padding: 3px
+    padding: 3px;
+    justify-content: space-between;
 }
 
 a{
@@ -32,13 +33,25 @@ a{
     text-decoration: none;
 }
 
-.profile-dropdown{
+.profile-button{
+    /* position: relative; */
+    /* left: 20rem; */
     display: flex;
-    flex-direction: column;
-    color: white;
     justify-items: flex-end;
-    top: 30px;
-    margin-top: 3.5em;
+}
+.profile-dropdown{
+    position: relative;
+    display: flex;
+    /* width: 12rem; */
+    flex-direction: column;
+    list-style: none;
+    top: 4rem;
+    right: 16rem;
+    padding: 0;
+    border: 2px solid cyan;
+    border-radius:  5px;
+    background-color: black;
+    padding: 4px;
 }
 
 /* .nav-items{
@@ -48,7 +61,9 @@ a{
 .my-stuff-button{
     background: none;
     color: white;
-    font-weight: 400;
+    font-weight: 500;
+    font-size: 15px;
+    padding-bottom: 10px;
 }
 
 .my-stuff-button:hover{
@@ -56,13 +71,25 @@ a{
 }
 
 .my-stuff-dropdown{
-    position: absolute;
+    position: relative;
     display: flex;
-    width: auto;
-    offset-position: top 100px;
+    width: 7rem;
+    flex-direction: column;
+    list-style: none;
+    top: 3rem;
+    right: 18rem;
+    padding: 0;
+    border: 2px solid cyan;
+    border-radius:  5px;
+    background-color: black;
 }
 
 .my-stuff{
     margin: 10px;
     width: 100%;
+}
+
+.my-stuff-div{
+    display: flex;
+    flex-direction: column;
 }
