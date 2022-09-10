@@ -23,7 +23,7 @@ const MyAlbums = ({user}) => {
             return
         }
     })
-
+//TODO: Change to thunk
     // useEffect(() => {
     //     console.log('gettingUserAlbums');
     //     dispatch(getUserAlbums());

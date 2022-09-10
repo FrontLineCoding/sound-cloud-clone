@@ -16,8 +16,8 @@ function Navigation({ isLoaded }){
       <>
         <NavLink exact to="/songs">Songs</NavLink>
         <NavLink to='/albums'>Albums</NavLink>
-        <MyStuff user={sessionUser} className='my-stuff-dropdown'></MyStuff>
-        <ProfileButton user={sessionUser} className='profile-button'/>
+        <div className='my-stuff'><MyStuff user={sessionUser} className='my-stuff-dropdown'></MyStuff></div>
+        <div><ProfileButton user={sessionUser} className='profile-button'/></div>
       </>
     );
   } else {

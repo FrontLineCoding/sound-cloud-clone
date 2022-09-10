@@ -39,6 +39,8 @@ a{
     /* left: 20rem; */
     display: flex;
     justify-items: flex-end;
+    margin-right: 10px;
+    margin-bottom: 5px;
 }
 .profile-dropdown{
     position: relative;
@@ -46,8 +48,8 @@ a{
     /* width: 12rem; */
     flex-direction: column;
     list-style: none;
-    top: 4rem;
-    right: 16rem;
+    top: 0.5rem;
+    right: 9rem;
     padding: 0;
     border: 2px solid cyan;
     border-radius:  5px;
@@ -66,6 +68,10 @@ a{
     font-size: 15px;
     padding-bottom: 10px;
 }
+.my-stuff-button:focus{
+    background: none;
+    border: none;
+}
 
 .my-stuff-button:hover{
     cursor: pointer;
@@ -77,8 +83,8 @@ a{
     width: 7rem;
     flex-direction: column;
     list-style: none;
-    top: 3rem;
-    right: 18rem;
+    /* top: 3rem; */
+    /* right: 18rem; */
     padding: 0;
     border: 2px solid cyan;
     border-radius:  5px;
@@ -87,10 +93,15 @@ a{
 
 .my-stuff{
     margin: 10px;
-    width: 100%;
+
 }
 
 .my-stuff-div{
     display: flex;
     flex-direction: column;
+    position: absolute;
+}
+
+.profile-div{
+    position: absolute;
 }
