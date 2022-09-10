@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Route } from "react-router-dom";
 import { getAlbums } from "../../store/albums";
@@ -13,6 +13,8 @@ const ListAlbums = () => {
         const albumsArr = Object.values(state.albums)
         return albumsArr
       });
+
+
     const [showForm, setShowForm] = useState(false);
 
 

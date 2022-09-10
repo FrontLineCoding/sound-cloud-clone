@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
@@ -24,16 +24,20 @@ function SignupFormPage() {
       return dispatch(sessionActions.signup({ firstName, lastName, email, username, password }))
         .catch(async (res) => {
           const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
+          if (data && data.errors) {
+            setErrors(data.errors);
+          };
         });
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
+  const errorsArr = Object.values(errors);
+
   return (
     <form onSubmit={handleSubmit}>
       <ul>
-          {/* {errors.map((error, idx) => <li key={idx}>{error}</li>)} */}
+          {errorsArr.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
       <label>
         Email

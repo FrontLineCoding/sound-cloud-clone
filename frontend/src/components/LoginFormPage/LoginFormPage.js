@@ -18,14 +18,14 @@ function LoginFormPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    console.log('loginForm button');
     return dispatch(sessionActions.login({ email, password }))
       .catch(async (res) => {
         const data = await res.json();
         console.log(data);
-        if (data && data.errors) setErrors(data.errors);
+        if (data.statusCode === 401) {setErrors([data.message])};
       });
   }
+console.log(errors);
 
   return (
     <form onSubmit={handleSubmit}>

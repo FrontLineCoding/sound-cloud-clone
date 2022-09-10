@@ -27,6 +27,8 @@ const CreateAlbumForm = ( {hideForm}) => {
     const updatePreviewImage = (e) => setPreviewImage(e.target.value);
     // const updateAudioURL = (e) => setAudioURL(e.target.value);
     // const updateAlbumId = (e) => setAlbumId(e.target.value);
+    const [errors, setErrors] = useState([]);
+
 
 
     const handleSubmit = async (e) => {
@@ -38,11 +40,16 @@ const CreateAlbumForm = ( {hideForm}) => {
             imageUrl: previewImage,
         };
 
-        let createdAlbum = await dispatch(addAlbum(payload));
+        let createdAlbum = await dispatch(addAlbum(payload))
+        .catch(async (res) => {
+            const data = await res.json();
+            console.log(data);
+            if(data && data.errors) setErrors(data.errors)
+        });
         if(createdAlbum){
             history.push(`/${username}/albums/${createdAlbum.id}`);
+            hideForm();
         }
-        hideForm();
     }
 
     const handleCancelClick = (e) => {
@@ -50,9 +57,15 @@ const CreateAlbumForm = ( {hideForm}) => {
         hideForm();
       };
 
+      const errorsArr = Object.values(errors);
+
       return (
             <section className="new-form-holder centered middled">
                 <form className="create-song-form" onSubmit={handleSubmit}>
+                    <ul>
+                         {errorsArr.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </ul>
+
                     <input
                         type="text"
                         placeholder="Title"

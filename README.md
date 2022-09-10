@@ -7,9 +7,15 @@
 ## Running Music App on local server
   - Clone repo from [GitHub](https://github.com/FrontLineCoding/sound-cloud-clone)
   - cd into the backend folder and run `npm install` in terminal
-  - start backend server by running `npm start`
+    - create a .env file inside the backend folder with the following
+    - PORT= whatever you want (suggestion : **8000**)
+    - DB_FILE = path to a database (suggestion : db/dev.db or *any db name*)
+    - Make sure you have the **sequelize-cli** installed
+    - run `dotenv npx sequelize db:migrate`
+    - run `dotenv npx sequelize db:seed:all`
+    - start backend server by running `npm start`
   - cd into the frontend folder and run `npm install` in terminal
-  - start frontend server by running `npm start`
+    - start frontend server by running `npm start`
 
 ## Technologies
   - Node JS
@@ -28,3 +34,6 @@
   - Create, read, update, and delete **Albums** (CRUD)
   - Upload the image and audio file to the song
   - Upload an image for an album cover to the album
+  - Navitgate to a song from selected album
+
+## ScreenShots

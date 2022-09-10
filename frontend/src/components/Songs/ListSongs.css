@@ -70,3 +70,18 @@ font-size: 30px;
     height: 250px;
     padding: 8px;
  }
+.album-song-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.album-song-div a {
+    width: fit-content;
+    color: black
+}
+
+.album-song-div a:hover{
+    cursor: pointer;
+}
