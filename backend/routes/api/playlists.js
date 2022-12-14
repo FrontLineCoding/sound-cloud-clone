@@ -116,7 +116,6 @@ router.delete('/:playlistId', requireAuth, async (req, res) => {
             statusCode: res.statusCode
         })
     }
-console.log(playlist);
     if(!(user.id === playlist.userId)){
         const err = new Error('This aint yers');
         return res.json(err.message);

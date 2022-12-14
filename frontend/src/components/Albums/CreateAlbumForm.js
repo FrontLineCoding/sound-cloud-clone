@@ -43,7 +43,6 @@ const CreateAlbumForm = ( {hideForm}) => {
         let createdAlbum = await dispatch(addAlbum(payload))
         .catch(async (res) => {
             const data = await res.json();
-            console.log(data);
             if(data && data.errors) setErrors(data.errors)
         });
         if(createdAlbum){

@@ -74,7 +74,6 @@ export const addSong = (song, albumId) => async (dispatch) => {
 }
 
 export const editSong = (song, songId) => async dispatch => {
-	console.log(song)
 	const response = await csrfFetch(`/api/songs/${songId}`, {
 		method: 'PUT',
 		headers: {'Content-Type' : 'application/json'},
@@ -89,7 +88,6 @@ export const editSong = (song, songId) => async dispatch => {
 }
 
 export const deleteUserSong = (songId) => async dispatch => {
-	console.log(songId);
 	const response = await csrfFetch(`/api/songs/${songId}`,{
 		method: 'DELETE'
 		}

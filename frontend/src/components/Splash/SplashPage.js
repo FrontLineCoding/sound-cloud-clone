@@ -15,13 +15,10 @@ const SplashPage = () => {
     const [val, setVal] = useState(0);
     // let val = 0;
     // useEffect(()=> {
-    //     console.log('effect ',val);
     //     setSelected(val)
     // }, [val])
     //     setInterval(() => {
     //         //if condintionals to loop through slides and set a dynamic variable
-    //         console.log('val  ', val);
-    //         console.log('selected ', selected);
     //         if(val < 2){
     //             // val = val + 1;/
     //             setVal(val + 1)

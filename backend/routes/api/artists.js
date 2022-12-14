@@ -101,7 +101,6 @@ router.get('/:artistId', async (req, res) => {
             statusCode: res.statusCode
         })
     }
-console.log(artist);
     if(!(artist.isArtist)){
         const err = new Error('This person is not an artist')
         return res.json(err.message);

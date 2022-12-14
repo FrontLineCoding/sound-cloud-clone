@@ -10,7 +10,6 @@ const MyAlbumDetail = ({hideForm}) => {
     const history = useHistory();
     const { albumId } = useParams();
     const album = useSelector(state => state.albums[albumId]);
-    console.log(album);
     const username = useSelector(state => state.session.user.username);
     const [editing, setEditing] = useState(false);
 

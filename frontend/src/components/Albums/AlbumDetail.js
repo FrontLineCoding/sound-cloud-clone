@@ -22,8 +22,6 @@ const AlbumDetail = () => {
             return
         }
     });
-    console.log(albumSongs);
-
 
     useEffect(() => {
         dispatch(getAlbumById(albumId));
