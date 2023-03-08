@@ -1,5 +1,6 @@
 const config = require('./index');
-
+console.log(config);
+console.log('****************************', process.env);
 module.exports = {
   development: {
     storage: config.dbFile,
